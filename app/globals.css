@@ -179,7 +179,8 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .card{background:var(--surface);padding:28px 24px;min-height:220px;display:flex;flex-direction:column;gap:12px;transition:background .2s}
 .card:hover{background:var(--hover)}
 .card .num{font-family:var(--mono);font-size:12px;color:var(--acc-600)}
-.card h3{margin-top:auto}
+.card h3{margin-top:8px}
+.cards.five .card h3{min-height:3.1em}
 .card p{font-size:15px;color:var(--ink-2)}
 .card.flat{min-height:0}
 .card.flat h3{margin-top:0}
