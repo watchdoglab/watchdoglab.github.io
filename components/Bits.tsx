@@ -14,30 +14,38 @@ export function Cmd({ text, dark }: { text: string; dark?: boolean }) {
   );
 }
 
-type Theme = "light" | "dark" | "system";
-const THEMES: { k: Theme; label: string; d: string }[] = [
-  { k: "light", label: "Light", d: "M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.41-1.41M4.93 19.07l1.41-1.41m0-11.32L4.93 4.93m14.14 14.14-1.41-1.41M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z" },
-  { k: "dark", label: "Dark", d: "M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" },
-  { k: "system", label: "System", d: "M3 5h18v11H3zM8 20h8M12 16v4" },
-];
+type Theme = "light" | "dark";
+const ICON: Record<Theme, string> = {
+  light: "M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.41-1.41M4.93 19.07l1.41-1.41m0-11.32L4.93 4.93m14.14 14.14-1.41-1.41M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z",
+  dark: "M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z",
+};
 
-/** Light / dark / system. The inline script in layout.tsx applies the saved choice before paint. */
+/**
+ * Light / dark toggle. Until the visitor picks one, the site follows the system theme and the
+ * button shows it. The inline script in layout.tsx applies a saved choice before paint.
+ */
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("system");
+  const [theme, setTheme] = useState<Theme>("light");
   useEffect(() => {
-    try { setTheme((localStorage.getItem("theme") as Theme) || "system"); } catch {}
+    const mq = window.matchMedia("(prefers-color-scheme: dark)");
+    const sync = () => {
+      let saved: string | null = null;
+      try { saved = localStorage.getItem("theme"); } catch {}
+      setTheme(saved === "light" || saved === "dark" ? saved : mq.matches ? "dark" : "light");
+    };
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
-  const pick = (t: Theme) => {
-    setTheme(t);
-    try { t === "system" ? localStorage.removeItem("theme") : localStorage.setItem("theme", t); } catch {}
-    if (t === "system") document.documentElement.removeAttribute("data-theme");
-    else document.documentElement.setAttribute("data-theme", t);
+  const next: Theme = theme === "dark" ? "light" : "dark";
+  const toggle = () => {
+    setTheme(next);
+    try { localStorage.setItem("theme", next); } catch {}
+    document.documentElement.setAttribute("data-theme", next);
   };
-  const k = THEMES.findIndex((t) => t.k === theme);
-  const cur = THEMES[k], next = THEMES[(k + 1) % THEMES.length];
   return (
-    <button className="theme" onClick={() => pick(next.k)} aria-label={`Theme: ${cur.label}. Switch to ${next.label}`} title={`Theme: ${cur.label}`}>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={cur.d} /></svg>
+    <button className="theme" onClick={toggle} aria-label={`Switch to ${next} theme`} title={`Switch to ${next} theme`}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={ICON[theme]} /></svg>
     </button>
   );
 }

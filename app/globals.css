@@ -332,5 +332,5 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 @media (prefers-reduced-motion:reduce){.globe,.ln,.live i,.sniffer,.who img{animation:none!important}.ln{opacity:1}html{scroll-behavior:auto}}
 
 /* theme switcher */
-.theme{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--surface);color:var(--ink-2);transition:color .15s,border-color .15s}
-.theme:hover{color:var(--blue-700);border-color:var(--blue-600)}
+.theme{width:36px;height:36px;display:grid;place-items:center;border-radius:var(--radius);color:var(--ink-2);transition:color .15s,background .15s}
+.theme:hover{color:var(--blue-700);background:var(--tint)}
