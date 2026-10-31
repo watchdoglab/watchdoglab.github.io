@@ -1,33 +1,33 @@
-/* Palette from the Watchdog logo: black, white and steel greys. Colour only for severity and status. */
+/* Palette from the Watchdog logo: near-black, steel silver, radar teal (#24d8c0). */
 :root{
-  --bg:#f2f5f8;--surface:#fff;--tint:#eceff2;--line:#d5dee6;--line-2:#c0ccd7;
+  --bg:#f2f5f8;--surface:#fff;--tint:#e9f1f3;--line:#d5dee6;--line-2:#c0ccd7;
   --ink:#05080d;--ink-2:#36404d;--muted:#66717f;
-  --acc-100:#e3e7ec;--acc-400:#8b96a4;--acc-600:#05080d;--acc-700:#05080d;
+  --acc-100:#d3f3ee;--acc-400:#4fd6c3;--acc-600:#0c8d7e;--acc-700:#0a7064;
   --crit:#e5484d;--high:#f2803b;--med:#e8b931;--low:#5b8def;--ok:#1fb38f;
   --dark:#05080d;--radius:0;
   --font:var(--font-sans),ui-sans-serif,system-ui,sans-serif;
   --mono:var(--font-mono),ui-monospace,SFMono-Regular,Menlo,monospace;
-  --hover:#f8fbfc;--raise:#f6f9fb;--faint:#8b96a4;--shadow:#05080d14;--glow:#05080d26;
+  --hover:#f8fbfc;--raise:#f6f9fb;--faint:#8b96a4;--shadow:#05080d14;--glow:#0c8d7e40;
   --btn:#05080d;--btn-fg:#fff;--acc-fg:#fff;
   --crit-bg:#fde8e8;--crit-fg:#b4232a;--high-bg:#fdeee3;--high-fg:#b0531b;--med-bg:#fbf3d6;--med-fg:#8a6a07;--ok-bg:#ddf5ee;--ok-fg:#0f7a5f;
-  --hero:linear-gradient(170deg,#f6f7f9 0%,#e1e5ea 55%,#cbd2da 100%);--hero-grain:#ffffff80;--planet-dot:#8d97a3;--scan-line:#8d97a333;--hero-shadow:#ffffff40;--hero-ink-2:#2a323c;
+  --hero:linear-gradient(170deg,#dfeef1 0%,#a9ded5 55%,#7ccfc1 100%);--hero-grain:#ffffff59;--planet-dot:#ffffff;--scan-line:#ffffff40;--hero-shadow:#ffffff40;--hero-ink-2:#1b2a2d;
   color-scheme:light;
 }
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#05080d;--surface:#0b1118;--tint:#0a0e13;--line:#18232e;--line-2:#24323f;
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#05080d;--surface:#0b1118;--tint:#081016;--line:#18232e;--line-2:#24323f;
   --ink:#e4edf5;--ink-2:#b0bfcc;--muted:#7c8a98;
-  --acc-100:#1a2129;--acc-400:#6b7785;--acc-600:#e4edf5;--acc-700:#ffffff;
-  --dark:#020407;--hover:#0f1820;--raise:#0d151d;--faint:#566472;--shadow:#00000080;--glow:#ffffff1a;
+  --acc-100:#0c2a28;--acc-400:#3fd3bd;--acc-600:#24d8c0;--acc-700:#6fe7d5;
+  --dark:#020407;--hover:#0f1820;--raise:#0d151d;--faint:#566472;--shadow:#00000080;--glow:#24d8c033;
   --btn:#e4edf5;--btn-fg:#05080d;--acc-fg:#05080d;
   --crit-bg:#3a1418;--crit-fg:#ff8f93;--high-bg:#3a2112;--high-fg:#ffad78;--med-bg:#352b0c;--med-fg:#f1d06a;--ok-bg:#0b2e26;--ok-fg:#5fe0bd;
-  --hero:radial-gradient(120% 90% at 80% 60%,#1c232c 0%,#0b1016 50%,#05080d 100%);--hero-grain:#ffffff0d;--planet-dot:#c9d4df;--scan-line:#c9d4df1f;--hero-shadow:transparent;--hero-ink-2:#b0bfcc;
+  --hero:radial-gradient(120% 90% at 80% 60%,#0c3532 0%,#071a1d 45%,#05080d 100%);--hero-grain:#ffffff10;--planet-dot:#24d8c0;--scan-line:#24d8c024;--hero-shadow:transparent;--hero-ink-2:#b8c7d3;
   color-scheme:dark;}}
-:root[data-theme="dark"]{--bg:#05080d;--surface:#0b1118;--tint:#0a0e13;--line:#18232e;--line-2:#24323f;
+:root[data-theme="dark"]{--bg:#05080d;--surface:#0b1118;--tint:#081016;--line:#18232e;--line-2:#24323f;
   --ink:#e4edf5;--ink-2:#b0bfcc;--muted:#7c8a98;
-  --acc-100:#1a2129;--acc-400:#6b7785;--acc-600:#e4edf5;--acc-700:#ffffff;
-  --dark:#020407;--hover:#0f1820;--raise:#0d151d;--faint:#566472;--shadow:#00000080;--glow:#ffffff1a;
+  --acc-100:#0c2a28;--acc-400:#3fd3bd;--acc-600:#24d8c0;--acc-700:#6fe7d5;
+  --dark:#020407;--hover:#0f1820;--raise:#0d151d;--faint:#566472;--shadow:#00000080;--glow:#24d8c033;
   --btn:#e4edf5;--btn-fg:#05080d;--acc-fg:#05080d;
   --crit-bg:#3a1418;--crit-fg:#ff8f93;--high-bg:#3a2112;--high-fg:#ffad78;--med-bg:#352b0c;--med-fg:#f1d06a;--ok-bg:#0b2e26;--ok-fg:#5fe0bd;
-  --hero:radial-gradient(120% 90% at 80% 60%,#1c232c 0%,#0b1016 50%,#05080d 100%);--hero-grain:#ffffff0d;--planet-dot:#c9d4df;--scan-line:#c9d4df1f;--hero-shadow:transparent;--hero-ink-2:#b0bfcc;
+  --hero:radial-gradient(120% 90% at 80% 60%,#0c3532 0%,#071a1d 45%,#05080d 100%);--hero-grain:#ffffff10;--planet-dot:#24d8c0;--scan-line:#24d8c024;--hero-shadow:transparent;--hero-ink-2:#b8c7d3;
   color-scheme:dark;}
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
