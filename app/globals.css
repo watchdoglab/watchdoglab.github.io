@@ -75,6 +75,10 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .hero:before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle at 1px 1px,var(--hero-grain) 1px,transparent 1.3px);background-size:4px 4px;pointer-events:none}
 .hero .wrap{border-color:transparent;position:relative}
 .hero-planet{position:absolute;z-index:-1;width:1400px;aspect-ratio:1;left:calc(72% - 700px);top:calc(48% - 700px);pointer-events:none}
+@media (min-width:821px){
+  .hero-planet{left:auto;right:-560px;-webkit-mask:linear-gradient(90deg,transparent 0,#000 32%);mask:linear-gradient(90deg,transparent 0,#000 32%)}
+  .hero:after{left:50%}
+}
 .hero:after{content:"";position:absolute;left:0;right:0;top:0;height:120px;z-index:-1;pointer-events:none;background:linear-gradient(180deg,transparent,var(--scan-line) 85%,transparent);border-bottom:1px solid var(--planet-dot);opacity:.6;animation:scanline 7s linear infinite}
 @keyframes scanline{from{transform:translateY(-120px)}to{transform:translateY(900px)}}
 .scope{position:relative;width:100%;height:100%}
