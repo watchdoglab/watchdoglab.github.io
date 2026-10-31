@@ -1,6 +1,6 @@
 """Builds lib/dogs-detail.json from the plugin's docs and lens skills. Run from the watchdog repo root."""
 import json, re, pathlib
-P = pathlib.Path("plugins/watchdog")
+P = pathlib.Path("plugin")
 LENS = {"malinois":"vapt","husky":"cloud","collie":"ai","bloodhound":"api","beagle":"privacy","rottweiler":"supply-chain","doberman":"auth",
         "shepherd":"mobile","dachshund":"database","akita":"secrets","pointer":"frontend","saintbernard":"incident-response","shiba":"web3","pyrenees":"compliance"}
 def strip(s): return re.sub(r"\*\*(.+?)\*\*", r"\1", re.sub(r"\[([^\]]+)\]\([^)]+\)", r"\1", s)).strip()
