@@ -44,8 +44,32 @@ export function DotGlobe() {
       </defs>
       <circle cx="300" cy="300" r="262" fill="url(#gl)" />
       {dots.map((d, k) => <circle key={k} cx={d.x.toFixed(1)} cy={d.y.toFixed(1)} r={d.r.toFixed(2)} fill="var(--blue-600)" opacity={d.o.toFixed(2)} />)}
-      <ellipse cx="300" cy="300" rx="290" ry="96" fill="none" stroke="var(--blue-400)" strokeDasharray="2 6" transform="rotate(-18 300 300)" />
     </svg>
+  );
+}
+
+/** Hero scene: dotted globe under a radar sweep, range rings, finding pings, and the pack orbiting the logo. */
+export function HeroRadar() {
+  const pings = [{ x: 31, y: 30, s: "crit" }, { x: 70, y: 62, s: "high" }, { x: 40, y: 74, s: "ok" }, { x: 64, y: 27, s: "med" }];
+  return (
+    <div className="radar" aria-hidden="true">
+      <DotGlobe />
+      <svg className="rings" viewBox="0 0 600 600">
+        {[110, 180, 250].map((r) => <circle key={r} cx="300" cy="300" r={r} />)}
+        <line x1="300" y1="30" x2="300" y2="570" /><line x1="30" y1="300" x2="570" y2="300" />
+        {Array.from({ length: 72 }, (_, k) => <line key={k} className="tick" x1="300" y1="28" x2="300" y2={k % 6 ? 36 : 44} transform={`rotate(${k * 5} 300 300)`} />)}
+      </svg>
+      <div className="sweep" />
+      {pings.map((p, k) => <span key={k} className={`ping ${p.s}`} style={{ left: `${p.x}%`, top: `${p.y}%`, animationDelay: `${k * 1.1}s` }} />)}
+      <div className="orbit">
+        {dogs.map((d, k) => (
+          <span key={d.id} className="node" style={{ "--a": `${(k / dogs.length) * 360}deg` } as React.CSSProperties}>
+            <img src={asset(`/media/dogs/${d.id}.gif`)} alt="" width={40} height={40} loading="lazy" />
+          </span>
+        ))}
+      </div>
+      <div className="core"><img src={asset("/watchdog-icon.png")} alt="" width={150} height={150} /></div>
+    </div>
   );
 }
 
