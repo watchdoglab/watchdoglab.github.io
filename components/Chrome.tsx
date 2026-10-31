@@ -41,10 +41,10 @@ export function DotGlobe({ dense }: { dense?: boolean }) {
   return (
     <svg className="globe" viewBox="0 0 600 600" aria-hidden="true">
       <defs>
-        <radialGradient id="gl" cx="40%" cy="35%" r="70%"><stop offset="0" stopColor="var(--surface)" stopOpacity=".9" /><stop offset="1" stopColor="var(--blue-100)" stopOpacity="0" /></radialGradient>
+        <radialGradient id="gl" cx="40%" cy="35%" r="70%"><stop offset="0" stopColor="var(--surface)" stopOpacity=".9" /><stop offset="1" stopColor="var(--acc-100)" stopOpacity="0" /></radialGradient>
       </defs>
       <circle cx="300" cy="300" r="262" fill="url(#gl)" />
-      {dots.map((d, k) => <circle key={k} cx={d.x.toFixed(1)} cy={d.y.toFixed(1)} r={d.r.toFixed(2)} fill="var(--blue-600)" opacity={d.o.toFixed(2)} />)}
+      {dots.map((d, k) => <circle key={k} cx={d.x.toFixed(1)} cy={d.y.toFixed(1)} r={d.r.toFixed(2)} fill="var(--acc-600)" opacity={d.o.toFixed(2)} />)}
     </svg>
   );
 }

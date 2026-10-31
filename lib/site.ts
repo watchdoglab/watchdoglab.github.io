@@ -38,7 +38,7 @@ export const site = {
     "Watchdog",
   ],
   author: { name: "Muhammed Swalahudheen C V", url: "https://salahu01.github.io", github: "https://github.com/salahu01" },
-  themeColor: "#f3f7ff",
+  themeColor: "#f2f5f8",
   requirements: "Claude Code · any language, any stack",
 };
 
