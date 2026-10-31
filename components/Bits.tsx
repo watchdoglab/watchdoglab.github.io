@@ -33,14 +33,12 @@ export function ThemeToggle() {
     if (t === "system") document.documentElement.removeAttribute("data-theme");
     else document.documentElement.setAttribute("data-theme", t);
   };
+  const k = THEMES.findIndex((t) => t.k === theme);
+  const cur = THEMES[k], next = THEMES[(k + 1) % THEMES.length];
   return (
-    <div className="theme" role="radiogroup" aria-label="Color theme">
-      {THEMES.map((t) => (
-        <button key={t.k} role="radio" aria-checked={theme === t.k} aria-label={t.label} title={t.label} className={theme === t.k ? "on" : ""} onClick={() => pick(t.k)}>
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={t.d} /></svg>
-        </button>
-      ))}
-    </div>
+    <button className="theme" onClick={() => pick(next.k)} aria-label={`Theme: ${cur.label}. Switch to ${next.label}`} title={`Theme: ${cur.label}`}>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={cur.d} /></svg>
+    </button>
   );
 }
 

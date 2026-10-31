@@ -288,7 +288,5 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 @media (prefers-reduced-motion:reduce){.globe,.float{animation:none}html{scroll-behavior:auto}}
 
 /* theme switcher */
-.theme{display:flex;align-items:center;gap:2px;padding:3px;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--surface);height:36px}
-.theme button{width:28px;height:28px;display:grid;place-items:center;border-radius:4px;color:var(--muted);transition:background .15s,color .15s}
-.theme button:hover{color:var(--ink)}
-.theme button.on{background:var(--tint);color:var(--blue-700)}
+.theme{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--surface);color:var(--ink-2);transition:color .15s,border-color .15s}
+.theme:hover{color:var(--blue-700);border-color:var(--blue-600)}
