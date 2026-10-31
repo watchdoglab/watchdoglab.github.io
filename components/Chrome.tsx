@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element -- static export: plain <img> with basePath-aware src */
 import Link from "next/link";
+import { ThemeToggle } from "@/components/Bits";
 import { REPO, SPONSORS, VERSION, asset, dogs } from "@/lib/site";
 
 export function Nav() {
@@ -14,6 +15,7 @@ export function Nav() {
           <Link href="/#faq">FAQ</Link>
         </nav>
         <div className="nav-cta">
+          <ThemeToggle />
           <a className="btn sm ghost" href={REPO}>GitHub</a>
           <Link className="btn sm blue" href="/#install">Install</Link>
         </div>
@@ -38,7 +40,7 @@ export function DotGlobe() {
   return (
     <svg className="globe" viewBox="0 0 600 600" aria-hidden="true">
       <defs>
-        <radialGradient id="gl" cx="40%" cy="35%" r="70%"><stop offset="0" stopColor="#fff" stopOpacity=".9" /><stop offset="1" stopColor="var(--blue-100)" stopOpacity="0" /></radialGradient>
+        <radialGradient id="gl" cx="40%" cy="35%" r="70%"><stop offset="0" stopColor="var(--surface)" stopOpacity=".9" /><stop offset="1" stopColor="var(--blue-100)" stopOpacity="0" /></radialGradient>
       </defs>
       <circle cx="300" cy="300" r="262" fill="url(#gl)" />
       {dots.map((d, k) => <circle key={k} cx={d.x.toFixed(1)} cy={d.y.toFixed(1)} r={d.r.toFixed(2)} fill="var(--blue-600)" opacity={d.o.toFixed(2)} />)}

@@ -1,6 +1,6 @@
 "use client";
 /* eslint-disable @next/next/no-img-element -- static export: plain <img> with basePath-aware src */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { asset, bundles, dogs } from "@/lib/site";
 
 /** Copy-to-clipboard command. */
@@ -11,6 +11,36 @@ export function Cmd({ text, dark }: { text: string; dark?: boolean }) {
     <button className={`cmd${dark ? " dark" : ""}`} onClick={copy} aria-label={`Copy ${text}`}>
       <span className="pr">$</span><code>{text}</code><span className="cp">{ok ? "Copied" : "Copy"}</span>
     </button>
+  );
+}
+
+type Theme = "light" | "dark" | "system";
+const THEMES: { k: Theme; label: string; d: string }[] = [
+  { k: "light", label: "Light", d: "M12 4V2m0 20v-2m8-8h2M2 12h2m13.66-5.66 1.41-1.41M4.93 19.07l1.41-1.41m0-11.32L4.93 4.93m14.14 14.14-1.41-1.41M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z" },
+  { k: "dark", label: "Dark", d: "M20 14.5A8 8 0 0 1 9.5 4a8 8 0 1 0 10.5 10.5z" },
+  { k: "system", label: "System", d: "M3 5h18v11H3zM8 20h8M12 16v4" },
+];
+
+/** Light / dark / system. The inline script in layout.tsx applies the saved choice before paint. */
+export function ThemeToggle() {
+  const [theme, setTheme] = useState<Theme>("system");
+  useEffect(() => {
+    try { setTheme((localStorage.getItem("theme") as Theme) || "system"); } catch {}
+  }, []);
+  const pick = (t: Theme) => {
+    setTheme(t);
+    try { t === "system" ? localStorage.removeItem("theme") : localStorage.setItem("theme", t); } catch {}
+    if (t === "system") document.documentElement.removeAttribute("data-theme");
+    else document.documentElement.setAttribute("data-theme", t);
+  };
+  return (
+    <div className="theme" role="radiogroup" aria-label="Color theme">
+      {THEMES.map((t) => (
+        <button key={t.k} role="radio" aria-checked={theme === t.k} aria-label={t.label} title={t.label} className={theme === t.k ? "on" : ""} onClick={() => pick(t.k)}>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d={t.d} /></svg>
+        </button>
+      ))}
+    </div>
   );
 }
 
