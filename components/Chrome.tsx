@@ -26,7 +26,7 @@ export function Nav() {
 
 /** Dotted globe for the hero: a sphere of dots plus a ring of dog nodes. */
 export function DotGlobe({ dense }: { dense?: boolean }) {
-  if (dense) return <Planet />;
+  if (dense) return <Scope />;
   const dots: { x: number; y: number; r: number; o: number }[] = [];
   for (let lat = -80; lat <= 80; lat += 8) {
     const rl = Math.cos((lat * Math.PI) / 180);
@@ -49,33 +49,34 @@ export function DotGlobe({ dense }: { dense?: boolean }) {
   );
 }
 
-/** Full-bleed hero backdrop: a big halftone planet lit from the top left, rising out of the corner. */
-function Planet() {
+/** Full-bleed hero backdrop: a giant radar scope. Dotted range rings, a rotating sweep, and blips. */
+function Scope() {
+  const C = 500, rings = [90, 170, 250, 330, 410, 490];
   const dots: string[] = [];
-  const R = 500, L = [-0.55, -0.6, 0.58]; // light direction
-  for (let lat = -88; lat <= 88; lat += 3.2) {
-    const la = (lat * Math.PI) / 180, rl = Math.cos(la);
-    const n = Math.max(8, Math.round(150 * rl));
-    for (let k = 0; k < n; k++) {
-      const lon = (k / n) * Math.PI * 2 + lat * 0.013;
-      const x = Math.sin(lon) * rl, y = -Math.sin(la), z = Math.cos(lon) * rl;
-      if (z < 0.02) continue;
-      const lit = Math.max(0, x * L[0] + y * L[1] + z * L[2]);
-      // pseudo-continents: a few smooth bumps make some regions denser
-      const land = Math.sin(lon * 3 + la * 2) + Math.cos(lon * 2 - la * 4) > 0.9;
-      const r = (land ? 3.4 : 1.9) * (0.4 + lit * 0.9);
-      dots.push(`M${(R + x * R).toFixed(1)} ${(R + y * R).toFixed(1)}m-${r.toFixed(2)} 0a${r.toFixed(2)} ${r.toFixed(2)} 0 1 0 ${(2 * r).toFixed(2)} 0a${r.toFixed(2)} ${r.toFixed(2)} 0 1 0 -${(2 * r).toFixed(2)} 0`);
-    }
+  const dot = (x: number, y: number, r: number) => `M${x.toFixed(1)} ${y.toFixed(1)}m-${r} 0a${r} ${r} 0 1 0 ${2 * r} 0a${r} ${r} 0 1 0 -${2 * r} 0`;
+  rings.forEach((R, i) => {
+    const n = Math.round((2 * Math.PI * R) / 9);
+    for (let k = 0; k < n; k++) { const a = (k / n) * Math.PI * 2; dots.push(dot(C + Math.cos(a) * R, C + Math.sin(a) * R, i === rings.length - 1 ? 2.4 : 1.7)); }
+  });
+  // radial spokes every 30°, dotted
+  for (let s = 0; s < 12; s++) {
+    const a = (s / 12) * Math.PI * 2;
+    for (let r = 40; r < 490; r += 14) dots.push(dot(C + Math.cos(a) * r, C + Math.sin(a) * r, 1.2));
   }
+  const blips = [{ a: 200, r: 300 }, { a: 245, r: 190 }, { a: 300, r: 380 }, { a: 160, r: 420 }, { a: 330, r: 240 }];
   return (
-    <svg className="planet" viewBox="0 0 1000 1000" aria-hidden="true">
-      <defs>
-        <radialGradient id="pl" cx="30%" cy="25%" r="80%"><stop offset="0" stopColor="#fff" stopOpacity=".8" /><stop offset=".6" stopColor="#fff" stopOpacity=".3" /><stop offset="1" stopColor="#fff" stopOpacity="0" /></radialGradient>
-      </defs>
-      <circle cx="500" cy="500" r="500" fill="url(#pl)" />
-      <path d={dots.join("")} fill="var(--planet-dot)" />
-      <circle cx="500" cy="500" r="499" fill="none" stroke="var(--planet-dot)" strokeOpacity=".5" />
-    </svg>
+    <div className="scope" aria-hidden="true">
+      <svg viewBox="0 0 1000 1000">
+        <path d={dots.join("")} fill="var(--planet-dot)" />
+        {Array.from({ length: 120 }, (_, k) => <line key={k} x1="500" y1="2" x2="500" y2={k % 10 ? 14 : 30} transform={`rotate(${k * 3} 500 500)`} stroke="var(--planet-dot)" strokeWidth={k % 10 ? 1.5 : 3} />)}
+        <circle cx="500" cy="500" r="8" fill="var(--planet-dot)" />
+      </svg>
+      <div className="scope-sweep" />
+      {blips.map((b, k) => {
+        const a = (b.a * Math.PI) / 180;
+        return <span key={k} className="blip" style={{ left: `${50 + (Math.cos(a) * b.r) / 10}%`, top: `${50 + (Math.sin(a) * b.r) / 10}%`, animationDelay: `${((b.a + 90) / 360) * 8 - 8}s` }} />;
+      })}
+    </div>
   );
 }
 
