@@ -10,7 +10,7 @@ const img = (name: string) => `data:image/png;base64,${readFileSync(join(process
 export function ogCard({ eyebrow, title, sub, image }: { eyebrow: string; title: string; sub: string; image: string }) {
   return new ImageResponse(
     (
-      <div style={{ width: "100%", height: "100%", display: "flex", background: "#eef4f6", fontFamily: "sans-serif", position: "relative" }}>
+      <div style={{ width: "100%", height: "100%", display: "flex", background: "#f2f4f6", fontFamily: "sans-serif", position: "relative" }}>
         <div style={{ position: "absolute", inset: 0, display: "flex", backgroundImage: "radial-gradient(circle at 1px 1px, #c0ccd7 1.5px, transparent 0)", backgroundSize: "28px 28px", opacity: 0.6 }} />
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "64px 0 64px 72px", width: 760 }}>
           <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
@@ -18,14 +18,14 @@ export function ogCard({ eyebrow, title, sub, image }: { eyebrow: string; title:
             <span style={{ fontSize: 32, fontWeight: 700, color: "#05080d" }}>Watchdog</span>
           </div>
           <div style={{ display: "flex", flexDirection: "column" }}>
-            <span style={{ fontSize: 22, letterSpacing: 3, textTransform: "uppercase", color: "#0a7064", marginBottom: 18 }}>{eyebrow}</span>
+            <span style={{ fontSize: 22, letterSpacing: 3, textTransform: "uppercase", color: "#05080d", marginBottom: 18 }}>{eyebrow}</span>
             <span style={{ fontSize: 64, lineHeight: 1.05, fontWeight: 700, color: "#05080d", letterSpacing: -2 }}>{title}</span>
             <span style={{ fontSize: 28, lineHeight: 1.35, color: "#36404d", marginTop: 22 }}>{sub}</span>
           </div>
-          <span style={{ fontSize: 24, color: "#0a7064" }}>watchdoglab.github.io</span>
+          <span style={{ fontSize: 24, color: "#05080d" }}>watchdoglab.github.io</span>
         </div>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "center", flex: 1 }}>
-          <div style={{ display: "flex", width: 340, height: 340, borderRadius: 40, background: "#fff", border: "2px solid #c0ccd7", alignItems: "center", justifyContent: "center", boxShadow: "0 30px 60px -20px rgba(12,141,126,.35)" }}>
+          <div style={{ display: "flex", width: 340, height: 340, borderRadius: 40, background: "#fff", border: "2px solid #c0ccd7", alignItems: "center", justifyContent: "center", boxShadow: "0 30px 60px -20px rgba(5,8,13,.25)" }}>
             <img src={img(image)} width={280} height={280} style={{ borderRadius: 32 }} alt="" />
           </div>
         </div>
