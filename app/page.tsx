@@ -120,16 +120,15 @@ export default function Home() {
               <h2>Run it while you build, or send the whole pack.</h2>
               <p className="muted">Use a single dog for one surface, a bundle for your product type, or every dog at once.</p>
             </div>
-            <ul className="uselist">
-              <li className="uh" aria-hidden="true"><span>#</span><span>Use</span><span>What you get</span></li>
+            <div className="cards five">
               {uses.map((u) => (
-                <li key={u.k}>
+                <article className="card" key={u.k}>
                   <span className="num">{u.k}</span>
                   <h3>{u.t}</h3>
                   <p>{u.d}</p>
-                </li>
+                </article>
               ))}
-            </ul>
+            </div>
           </div>
         </section>
 
