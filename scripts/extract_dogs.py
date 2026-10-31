@@ -1,4 +1,4 @@
-"""Builds lib/dogs-detail.json from the plugin's docs and lens skills. Run from the repo root."""
+"""Builds lib/dogs-detail.json from the plugin's docs and lens skills. Run from the watchdog repo root."""
 import json, re, pathlib
 P = pathlib.Path("plugins/watchdog")
 LENS = {"malinois":"vapt","husky":"cloud","collie":"ai","bloodhound":"api","beagle":"privacy","rottweiler":"supply-chain","doberman":"auth",
@@ -9,7 +9,7 @@ def section(md, name):
     return m.group(1).strip() if m else ""
 out = {}
 for dog, lens in LENS.items():
-    doc = (P / "docs" / f"{dog}.md").read_text()
+    doc = (pathlib.Path("docs") / f"{dog}.md").read_text()
     sk = (P / "skills" / lens / "SKILL.md").read_text()
     h1 = re.search(r"^# .*?—\s*(.+)$", doc, re.M)
     intro = re.search(r"^# [^\n]*\n\n([^\n]+)", doc, re.M)
