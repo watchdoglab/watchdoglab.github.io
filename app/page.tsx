@@ -1,265 +1,282 @@
 /* eslint-disable @next/next/no-img-element -- static export: plain <img> with basePath-aware src */
 import Link from "next/link";
-import { BundleRadar, Cmd } from "@/components/Bits";
-import Motion from "@/components/Motion";
-import ScentField from "@/components/ScentField";
-import { ASCII_DOG } from "@/lib/ascii-dog";
-import { accentOf } from "@/lib/dogs";
-import { REPO, SPONSORS, VERSION, asset, dogs, faqs, installCommands, site } from "@/lib/site";
+import { BundlePicker, Cmd } from "@/components/Bits";
+import { DotGlobe, Footer, Nav } from "@/components/Chrome";
+import { REPO, VERSION, asset, dogs, faqs, features, installCommands, installSteps } from "@/lib/site";
 
-const code: { t: string; v?: boolean; fix?: string }[] = [
-  { t: "import { Router } from \"express\";" },
-  { t: "import { db } from \"../db\";" },
-  { t: "import { requireUser } from \"../auth\";" },
-  { t: "" },
-  { t: "export const users = Router();" },
-  { t: "" },
-  { t: "users.get(\"/me\", requireUser, async (req, res) => {" },
-  { t: "  res.json(req.user);" },
-  { t: "});" },
-  { t: "" },
-  { t: "users.get(\"/:id\", async (req, res) => {" },
-  { t: "  const sql = \"SELECT * FROM users WHERE id = \" + req.params.id;", v: true, fix: "  const row = await db.query(\"SELECT * FROM users WHERE id = $1\", [req.params.id]);" },
-  { t: "  const row = await db.raw(sql);" },
-  { t: "  res.json(row);" },
-  { t: "});" },
-  { t: "" },
-  { t: "users.post(\"/\", requireUser, async (req, res) => {" },
-  { t: "  const user = await db.users.create(pick(req.body, FIELDS));" },
-  { t: "  res.status(201).json(user);" },
-  { t: "});" },
+const scanners = ["semgrep", "gitleaks", "trivy", "checkov", "osv-scanner", "bandit", "slither", "mobsf"];
+
+const uses = [
+  { k: "01", t: "Live lens while you code", d: "Each dog stays on all session and flags risky code the moment it's written: the line, the exploit, the smallest fix." },
+  { k: "02", t: "Whole-repo audit", d: "One command reviews the entire repo and returns a ranked report, Critical to Low, with file:line for every finding." },
+  { k: "03", t: "Bundles per product", d: "Pick what you're building and one command sends the right dogs. No guessing which checks apply." },
+  { k: "04", t: "Client-ready report", d: "/watchdog-go-vapt report turns the session's findings into one report you can hand over." },
+  { k: "05", t: "Compliance mapping", d: "Pyrenees maps findings to SOC 2, ISO 27001, PCI DSS and OWASP ASVS before the auditor asks." },
 ];
-const VULN_LINE = code.findIndex((l) => l.v) + 1;
 
 const sev = [
-  { k: "crit", label: "Critical", n: 2, w: 18 },
-  { k: "high", label: "High", n: 5, w: 42 },
-  { k: "med", label: "Medium", n: 9, w: 74 },
-  { k: "low", label: "Low", n: 4, w: 32 },
+  { k: "crit", label: "Critical", n: 2 },
+  { k: "high", label: "High", n: 5 },
+  { k: "med", label: "Medium", n: 9 },
+  { k: "low", label: "Low", n: 4 },
+];
+const sevTotal = sev.reduce((a, s) => a + s.n, 0);
+
+const findings = [
+  { s: "crit", t: "SQL injection in GET /users/:id", f: "src/routes/users.ts:12", dog: "malinois" },
+  { s: "crit", t: "IDOR: any user can read any invoice", f: "src/routes/invoices.ts:31", dog: "bloodhound" },
+  { s: "high", t: "JWT accepted with alg=none", f: "src/auth/jwt.ts:18", dog: "doberman" },
+  { s: "high", t: "S3 bucket is public-read", f: "infra/storage.tf:7", dog: "husky" },
+  { s: "med", t: "Agent tool can run shell without approval", f: "agent/tools.py:44", dog: "collie" },
+];
+const sevName = { crit: "Critical", high: "High", med: "Medium" } as const;
+
+const compare = [
+  { area: "Code", old: "SAST and dependency scanners", gap: "Exploitability and business logic", wd: "Dogs read the code scanners can't understand" },
+  { area: "While building", old: "Review happens after the PR", gap: "Bugs ship before anyone looks", wd: "Live lens flags risk as the line is written" },
+  { area: "Pen testing", old: "Deep, point-in-time, expensive", gap: "Nothing between engagements", wd: "Run a full audit any time, for free" },
+  { area: "Reporting", old: "Long PDF, security jargon", gap: "Devs don't know what to fix first", wd: "Ranked, plain English, smallest fix" },
 ];
 
 export default function Home() {
   return (
     <>
-      <Motion />
-      <div id="loader" aria-hidden="true">
-        <div className="ld-top"><span>watchdog://boot</span><span data-load-status>scanning…</span></div>
-        <pre className="ld-ascii" data-ascii>{ASCII_DOG}</pre>
-        <div className="ld-foot">
-          <div className="ld-num"><span data-load>000</span><i>%</i></div>
-          <p>sniffing the perimeter<span className="caret" /></p>
-        </div>
-        <div className="ld-bar"><i data-load-bar /></div>
-      </div>
-      <div className="wipe" aria-hidden="true"><span /></div>
-      <div className="reticle" aria-hidden="true"><i /><b /><span className="rt-xy">000 · 000</span><span className="rt-lbl" /></div>
-      <div className="scan" aria-hidden="true" />
-
-      <nav aria-label="Main">
-        <a className="brand" href="#top" data-hover="home"><img src={asset("/watchdog-icon.png")} alt="" width={30} height={30} /><span>WATCHDOG</span></a>
-        <div className="links">
-          <a href="#hunt" data-hover="go">Hunt</a>
-          <a href="#pack" data-hover="go">Pack</a>
-          <a href="#radar" data-hover="go">Commands</a>
-          <a href="#faq" data-hover="go">FAQ</a>
-          <a href={REPO} data-hover="repo">GitHub ↗</a>
-        </div>
-        <a className="pill" href="#install" data-hover="install"><span>Install</span><span>Install</span></a>
-      </nav>
-
+      <Nav />
       <main id="main">
-        {/* ── 01 Hero: a field of code that the pack sweeps ───────────── */}
+        {/* ── Hero ─────────────────────────────────────────────── */}
         <section id="top" className="hero">
-          <ScentField />
-          <div className="hero-glow" aria-hidden="true" />
-          <img className="hero-dog" src={asset("/watchdog-icon.png")} alt="" width={720} height={720} />
-          <div className="hud tl"><span className="blink">●</span> live · perimeter 01</div>
-          <div className="hud tr">v{VERSION} · MIT · claude code</div>
-          <div className="hero-in">
-            <p className="kicker" data-intro>Security review inside Claude Code</p>
-            <h1 className="mega" data-mega>
-              <span className="row">Your code</span>
-              <span className="row">has a <em>scent.</em></span>
-            </h1>
-            <div className="hero-foot" data-intro>
-              <p>
-                Fourteen security dogs live in your editor. They sniff every change, <b>lock onto the exact line</b>, and tell you
-                how it gets abused and the smallest fix. Move your cursor. Find what they find.
-              </p>
+          <div className="wrap hero-grid">
+            <div className="hero-copy">
+              <a className="announce" href={REPO}><span className="dot" />v{VERSION} · 14 dogs, one install <span>→</span></a>
+              <h1>Security review,<br />running while you build.</h1>
+              <p className="lead">A pack of security dogs inside Claude Code. They flag real vulnerabilities as you write code and audit the whole repo with one command.</p>
               <div className="ctas">
-                <a className="btn" href="#install" data-hover="install">Unleash the pack <span>→</span></a>
-                <a className="btn line" href={REPO} data-hover="repo">Source ↗</a>
+                <Link className="btn dark" href="#install">Install the pack <span>→</span></Link>
+                <a className="btn ghost" href={REPO}>View on GitHub <span>↗</span></a>
               </div>
             </div>
+            <div className="hero-art">
+              <DotGlobe />
+              <img className="hero-dog" src={asset("/watchdog-icon.png")} alt="" width={180} height={180} />
+              <div className="float f1"><span className="sev crit" />SQL injection · users.ts:12</div>
+              <div className="float f2"><span className="sev high" />Public S3 bucket · storage.tf:7</div>
+              <div className="float f3"><span className="ok" />Fix verified</div>
+            </div>
           </div>
-          <div className="hud bl">scroll to start the hunt <span className="arrow">↓</span></div>
-          <div className="hud br"><span data-threat>0</span> threats sniffed</div>
+          <div className="wrap strip">
+            <div><Icon k="pulse" />Always-on security lens</div>
+            <div><Icon k="grid" />14 dogs, one per surface</div>
+            <div><Icon k="flow" />Built into Claude Code</div>
+          </div>
         </section>
 
-        {/* ── 02 Statement: words light up as you scroll ─────────────── */}
-        <section className="statement" aria-label="Why">
-          <p data-words>
-            Security review comes late. It costs a lot. Usually it never happens, and by then the bug has shipped.
-            <em> A good dog doesn&apos;t wait for the audit.</em> It sits next to you and barks the second something smells wrong.
-          </p>
+        {/* ── Tools ───────────────────────────────────────────── */}
+        <section className="logos">
+          <div className="wrap">
+            <p>Works with the scanners you already use</p>
+            <ul>{scanners.map((s) => <li key={s}>{s}</li>)}</ul>
+          </div>
         </section>
 
-        {/* ── 03 The hunt: pinned, scrubbed sequence ─────────────────── */}
-        <section id="hunt" className="hunt" aria-labelledby="hunt-h">
-          <div className="hunt-pin">
-            <header className="hunt-head">
-              <h2 id="hunt-h" className="sr">How a dog finds a bug</h2>
-              <ol className="steps">
-                {["Sniff", "Lock", "Explain", "Fix"].map((s, k) => <li key={s} data-step={k}><span>0{k + 1}</span>{s}</li>)}
-              </ol>
-            </header>
-            <div className="hunt-grid">
-              <div className="editor">
-                <div className="ed-bar"><span>routes/users.ts</span><span className="ed-dog"><img src={asset("/media/dogs/malinois.gif")} alt="" width={22} height={22} />malinois watching</span></div>
-                <div className="ed-body">
-                  <div className="scanbar" data-scanbar />
-                  {code.map((l, k) => (
-                    <div key={k} className={`ln${l.v ? " vuln" : ""}`} data-ln={k}>
-                      <span className="no">{k + 1}</span>
-                      <code className="src">{l.t || " "}</code>
-                      {l.fix && <code className="fixed">{l.fix}</code>}
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <aside className="finding" data-finding aria-label="Finding">
-                <img className="f-dog" src={asset("/media/dogs/malinois.gif")} alt="Malinois, the VAPT dog" data-fdog />
-                <div className="f-card">
-                  <div className="f-sev">● CRITICAL <span>SQL injection</span></div>
-                  <div className="f-loc">routes/users.ts:{VULN_LINE}</div>
-                  <dl>
-                    <div data-frow><dt>What</dt><dd>The id from the URL is pasted into the SQL query.</dd></div>
-                    <div data-frow><dt>Abuse</dt><dd><code>/users/1 OR 1=1</code> returns every user in the table.</dd></div>
-                    <div data-frow><dt>Fix</dt><dd>Pass it as a parameter. One line, shown in the editor.</dd></div>
-                    <div data-frow><dt>If not</dt><dd>Full database read. Breach notice. Bad week.</dd></div>
-                  </dl>
-                  <div className="f-ok" data-fok>✓ fixed · re-sniffed · clean</div>
-                </div>
-              </aside>
+        {/* ── Why ─────────────────────────────────────────────── */}
+        <section className="sec">
+          <div className="wrap two">
+            <div>
+              <div className="eyebrow">Why Watchdog</div>
+              <h2>From late, costly reviews to a pack on duty.</h2>
+            </div>
+            <div className="why">
+              <p className="big">Security review usually comes late, costs a lot, or never happens.</p>
+              <p>Watchdog moves it into the moment you write the code. Find vulnerabilities as your product changes, not months later, then go straight from the finding to the fix.</p>
             </div>
           </div>
         </section>
 
-        {/* ── 04 The pack: horizontal dossier reel ──────────────────── */}
-        <section id="pack" className="pack" aria-labelledby="pack-h">
-          <div className="pack-pin">
-            <div className="pack-head">
-              <h2 id="pack-h" data-split>Fourteen noses.<br />One pack.</h2>
-              <p>Each dog guards one surface and answers to its own command. One install brings them all.</p>
+        {/* ── How teams use it ────────────────────────────────── */}
+        <section id="how" className="sec tint">
+          <div className="wrap">
+            <div className="head">
+              <div className="eyebrow">How teams use Watchdog</div>
+              <h2>Run it while you build, or send the whole pack.</h2>
+              <p className="muted">Use a single dog for one surface, a bundle for your product type, or every dog at once.</p>
             </div>
-            <div className="pack-track" data-track>
-              {dogs.map((d, k) => (
-                <Link className="dossier" key={d.id} href={`/dogs/${d.id}/`} data-hover={`open ${d.name.toLowerCase()}`} data-wipe data-wipe-label={d.name} data-wipe-color={accentOf(d.id)} style={{ "--acc": accentOf(d.id) } as React.CSSProperties}>
-                  <span className="d-ix">{String(k + 1).padStart(2, "0")}</span>
-                  <div className="d-img"><img src={asset(`/media/dogs/${d.id}.gif`)} alt={`${d.name}, the ${d.role} dog`} width={220} height={220} loading="lazy" data-dimg /></div>
-                  <span className="d-role">{d.role}</span>
+            <div className="cards five">
+              {uses.map((u) => (
+                <article className="card" key={u.k}>
+                  <span className="num">{u.k}</span>
+                  <h3>{u.t}</h3>
+                  <p>{u.d}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ── Report mock ─────────────────────────────────────── */}
+        <section className="sec">
+          <div className="wrap">
+            <div className="head">
+              <div className="eyebrow">The report</div>
+              <h2>Every finding, ranked in one place.</h2>
+              <p className="muted">Severity, the exact line, how it gets abused and the smallest fix. Every report ends with what was not checked.</p>
+            </div>
+            <div className="dash">
+              <div className="dash-bar"><span /><span /><span /><code>/watchdog-go-web · acme-api</code></div>
+              <div className="dash-grid">
+                <div className="panel">
+                  <div className="eyebrow">Findings</div>
+                  <div className="stat">{sevTotal}</div>
+                  <div className="sevbar">{sev.map((s) => <i key={s.k} className={s.k} style={{ flex: s.n }} />)}</div>
+                  <ul className="sevlist">{sev.map((s) => <li key={s.k}><span className={`sev ${s.k}`} />{s.label}<b>{s.n}</b></li>)}</ul>
+                </div>
+                <div className="panel wide">
+                  <div className="eyebrow">Top findings</div>
+                  <ul className="flist">
+                    {findings.map((f) => (
+                      <li key={f.t}>
+                        <span className={`tagsev ${f.s}`}>{sevName[f.s as keyof typeof sevName]}</span>
+                        <span className="ft"><b>{f.t}</b><code>{f.f}</code></span>
+                        <img src={asset(`/media/dogs/${f.dog}.gif`)} alt={f.dog} width={28} height={28} />
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                <div className="panel">
+                  <div className="eyebrow">Fix · users.ts:12</div>
+                  <pre className="diff"><span className="del">- const sql = &quot;SELECT … id = &quot; + id;</span>{"\n"}<span className="add">+ db.query(&quot;… id = $1&quot;, [id]);</span></pre>
+                </div>
+                <div className="panel">
+                  <div className="eyebrow">Not checked</div>
+                  <ul className="nc"><li>Runtime config on prod</li><li>Third-party SaaS settings</li><li>Business rules outside the repo</li></ul>
+                </div>
+                <div className="panel">
+                  <div className="eyebrow">Secrets</div>
+                  <p className="small">2 found, reported by location and type only. Values are never printed.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ── The pack ────────────────────────────────────────── */}
+        <section id="pack" className="sec tint">
+          <div className="wrap">
+            <div className="head">
+              <div className="eyebrow">The pack</div>
+              <h2>Fourteen dogs. Each guards one surface.</h2>
+              <p className="muted">Start with the dog you need, then add more.</p>
+            </div>
+            <div className="pack">
+              {dogs.map((d) => (
+                <Link className="dogcard" key={d.id} href={`/dogs/${d.id}/`}>
+                  <img src={asset(`/media/dogs/${d.id}.gif`)} alt="" width={64} height={64} />
+                  <div className="eyebrow">{d.role}</div>
                   <h3>{d.name}</h3>
                   <p>{d.desc}</p>
                   <code>{d.cmd}</code>
-                  <span className="d-open">Open case file →</span>
                 </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ── 05 Radar: pick a bundle ───────────────────────────────── */}
-        <section id="radar" className="sec" aria-labelledby="radar-h">
+        {/* ── Commands ────────────────────────────────────────── */}
+        <section id="commands" className="sec">
           <div className="wrap">
-            <div className="sec-head">
-              <span className="tag">05 / commands</span>
-              <h2 id="radar-h" data-split>What are you building?</h2>
-              <p>One command sends the right dogs. They come back with one report.</p>
+            <div className="head">
+              <div className="eyebrow">Commands</div>
+              <h2>One command for what you&apos;re building.</h2>
             </div>
-            <BundleRadar />
+            <BundlePicker />
           </div>
         </section>
 
-        {/* ── 06 Report ─────────────────────────────────────────────── */}
-        <section id="report" className="sec" aria-labelledby="report-h">
-          <div className="wrap report">
-            <div className="sec-head">
-              <span className="tag">06 / the report</span>
-              <h2 id="report-h" data-split>Ranked. Merged. Honest.</h2>
-              <p>Critical to Low, duplicates merged, every finding with <code>file:line</code>. Secrets by location only. And every report ends with what it didn&apos;t check.</p>
+        {/* ── Comparison ──────────────────────────────────────── */}
+        <section className="sec tint">
+          <div className="wrap">
+            <div className="head">
+              <div className="eyebrow">Why Watchdog</div>
+              <h2>Close the gaps between your scanners and your pen test.</h2>
             </div>
-            <div className="bars" data-bars>
-              {sev.map((s) => (
-                <div className={`bar ${s.k}`} key={s.k}>
-                  <span className="lbl">{s.label}</span>
-                  <span className="track"><i style={{ width: `${s.w}%` }} data-bar /></span>
-                  <span className="num" data-count={s.n}>{s.n}</span>
+            <div className="table" role="table">
+              <div className="tr th" role="row"><span>Coverage</span><span>Traditional approach</span><span>The gap</span><span>Watchdog</span></div>
+              {compare.map((c) => (
+                <div className="tr" role="row" key={c.area}>
+                  <span><b>{c.area}</b></span><span>{c.old}</span><span className="gap">{c.gap}</span><span className="wd">{c.wd}</span>
                 </div>
               ))}
-              <div className="notchecked">
-                <span>Not checked</span>
-                <ul><li>runtime config on production</li><li>third-party payment flow</li><li>physical / social engineering</li></ul>
-              </div>
             </div>
           </div>
         </section>
 
-        {/* ── 07 Install ────────────────────────────────────────────── */}
-        <section id="install" className="sec install" aria-labelledby="install-h">
+        {/* ── Features ────────────────────────────────────────── */}
+        <section className="sec">
           <div className="wrap">
-            <div className="sec-head">
-              <span className="tag">07 / install</span>
-              <h2 id="install-h" data-split>Two lines. Whole pack.</h2>
+            <div className="head">
+              <div className="eyebrow">What you get</div>
+              <h2>Findings your team can act on.</h2>
             </div>
-            <div className="term" data-term>
-              <div className="t-bar"><i /><i /><i /><span>claude</span></div>
-              <div className="t-body">
-                {installCommands.map((c) => <div className="t-line" key={c}><span className="pr">›</span><span data-type={c}>{c}</span></div>)}
-                <div className="t-out" data-tout>✓ watchdog installed · 14 dogs · 21 commands</div>
-                <div className="t-line"><span className="pr">›</span><span data-type="/watchdog-go-web">/watchdog-go-web</span><i className="caret" /></div>
-              </div>
+            <div className="cards three">
+              {features.map((f) => <article className="card flat" key={f.title}><h3>{f.title}</h3><p>{f.body}</p></article>)}
             </div>
-            <div className="copyrow">{installCommands.map((c) => <Cmd key={c} text={c} />)}</div>
+            <div className="stats">
+              <div><b>14</b><span>security dogs</span></div>
+              <div><b>40</b><span>commands and lenses</span></div>
+              <div><b>0</b><span>accounts or telemetry</span></div>
+              <div><b>MIT</b><span>free and open source</span></div>
+            </div>
           </div>
         </section>
 
-        {/* ── 08 FAQ ────────────────────────────────────────────────── */}
-        <section id="faq" className="sec" aria-labelledby="faq-h">
-          <div className="wrap faq">
-            <div className="sec-head">
-              <span className="tag">08 / faq</span>
-              <h2 id="faq-h" data-split>Questions.</h2>
-            </div>
+        {/* ── Install ─────────────────────────────────────────── */}
+        <section id="install" className="sec tint">
+          <div className="wrap two">
             <div>
-              {faqs.map((f, i) => (
-                <details key={f.q} open={i === 0}>
-                  <summary data-hover="open"><span className="q-ix">{String(i + 1).padStart(2, "0")}</span><h3>{f.q}</h3><span className="pm" /></summary>
-                  <p>{f.a}</p>
-                </details>
-              ))}
+              <div className="eyebrow">Install</div>
+              <h2>Up and running in a minute.</h2>
+              <ol className="steps">{installSteps.map((s, k) => <li key={s.name}><span>{k + 1}</span><div><b>{s.name}</b><p>{s.text}</p></div></li>)}</ol>
+            </div>
+            <div className="term">
+              <div className="dash-bar"><span /><span /><span /><code>claude</code></div>
+              <div className="term-in">{installCommands.map((c) => <Cmd key={c} text={c} dark />)}<Cmd text="/watchdog-go-all" dark /></div>
             </div>
           </div>
         </section>
 
-        {/* ── 09 Outro ──────────────────────────────────────────────── */}
-        <section className="outro" aria-labelledby="outro-h">
-          <h2 id="outro-h" className="giant" data-giant>
-            <span>Sit.</span><span>Stay.</span><span className="sig">Secure.</span>
-          </h2>
-          <div className="parade" aria-hidden="true">
-            <div className="parade-track" data-parade>
-              {[0, 1].map((r) => dogs.map((d) => <img key={`${r}${d.id}`} src={asset(`/media/dogs/${d.id}.gif`)} alt="" width={96} height={96} loading="lazy" />))}
+        {/* ── FAQ ─────────────────────────────────────────────── */}
+        <section id="faq" className="sec">
+          <div className="wrap two">
+            <div>
+              <div className="eyebrow">FAQ</div>
+              <h2>Questions, answered.</h2>
+            </div>
+            <div className="faq">
+              {faqs.map((f) => <details key={f.q}><summary>{f.q}</summary><p>{f.a}</p></details>)}
             </div>
           </div>
-          <a className="btn" href="#install" data-hover="install">Install Watchdog <span>→</span></a>
+        </section>
+
+        {/* ── CTA ─────────────────────────────────────────────── */}
+        <section className="cta">
+          <div className="wrap">
+            <h2>From the first finding to the fix.</h2>
+            <div className="ctas">
+              <Link className="btn blue" href="#install">Install the pack <span>→</span></Link>
+              <a className="btn ghost light" href={REPO}>Star on GitHub <span>↗</span></a>
+            </div>
+          </div>
         </section>
       </main>
-
-      <footer>
-        <span>© 2026 {site.author.name}</span>
-        <span>Static by default · active tests only in your written scope</span>
-        <span><a href={REPO}>Source</a> · <a href={`${REPO}/issues`}>Issues</a> · <a href={SPONSORS}>Sponsor</a></span>
-      </footer>
+      <Footer />
     </>
   );
+}
+
+function Icon({ k }: { k: "pulse" | "grid" | "flow" }) {
+  const p = {
+    pulse: "M2 12h4l3-7 4 14 3-7h6",
+    grid: "M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z",
+    flow: "M5 6h8a3 3 0 0 1 0 6H9a3 3 0 0 0 0 6h10M17 15l3 3-3 3",
+  }[k];
+  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><path d={p} /></svg>;
 }

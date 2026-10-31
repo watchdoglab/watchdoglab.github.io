@@ -5,7 +5,7 @@ export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://watchdogla
 export const REPO = "https://github.com/watchdoglab/watchdog";
 export const SPONSORS = "https://github.com/sponsors/salahu01";
 export const INSTALL = "#install";
-export const VERSION = "0.2.0";
+export const VERSION = "0.2.3";
 /** Prefix for files in /public (static export does not add basePath to plain <img> src). */
 export const asset = (p: string) => `${BASE_PATH}${p}`;
 export const absoluteUrl = (p = "/") => `${SITE_URL}${p === "/" ? "/" : p}`;
@@ -35,7 +35,7 @@ export const site = {
     "Watchdog",
   ],
   author: { name: "Muhammed Swalahudheen C V", url: "https://salahu01.github.io", github: "https://github.com/salahu01" },
-  themeColor: "#07090c",
+  themeColor: "#f3f7ff",
   requirements: "Claude Code · any language, any stack",
 };
 
