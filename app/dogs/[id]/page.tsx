@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { Cmd } from "@/components/Bits";
 import { DotGlobe, Footer, Nav } from "@/components/Chrome";
 import HeroDemo from "@/components/HeroDemo";
-import { getDog } from "@/lib/dogs";
+import { dogFaqs, getDog } from "@/lib/dogs";
 import { REPO, absoluteUrl, asset, dogs, installCommands } from "@/lib/site";
 
 export const dynamicParams = false;
@@ -31,6 +31,12 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
   if (!d) notFound();
   const total = d.total ?? Math.max(...d.results.map((r) => r.found));
 
+  const faqs = dogFaqs(d);
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+  };
   const breadcrumbs = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -43,7 +49,7 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
 
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([breadcrumbs, faqLd]) }} />
       <Nav />
       <main id="main">
         <section className="dhero hero">
@@ -117,6 +123,13 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
           <div className="wrap two">
             <div><div className="eyebrow">Rules of engagement</div><h2>What {d.name} will never do.</h2></div>
             <ol className="steps">{d.rules.map((r, k) => <li key={k}><span>{k + 1}</span><div><p>{r}</p></div></li>)}</ol>
+          </div>
+        </section>
+
+        <section className="sec tint">
+          <div className="wrap two">
+            <div><div className="eyebrow">FAQ</div><h2>{d.name}, answered.</h2></div>
+            <div className="faq">{faqs.map((f) => <details key={f.q}><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
           </div>
         </section>
 

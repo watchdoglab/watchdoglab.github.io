@@ -3,7 +3,7 @@ import Link from "next/link";
 import { BundlePicker, Cmd } from "@/components/Bits";
 import { DotGlobe, Footer, Nav } from "@/components/Chrome";
 import HeroDemo from "@/components/HeroDemo";
-import { REPO, VERSION, asset, dogs, faqs, features, installCommands, installSteps } from "@/lib/site";
+import { REPO, SITE_URL, VERSION, asset, dogs, faqs, features, installCommands, installSteps } from "@/lib/site";
 
 const scanners = ["semgrep", "gitleaks", "trivy", "checkov", "osv-scanner", "bandit", "slither", "mobsf"];
 
@@ -39,9 +39,29 @@ const compare = [
   { area: "Reporting", old: "Long PDF, security jargon", gap: "Devs don't know what to fix first", wd: "Ranked, plain English, smallest fix" },
 ];
 
+// Home-only structured data: the FAQ and install steps shown on this page.
+const homeLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}/#faq`,
+      mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    },
+    {
+      "@type": "HowTo",
+      "@id": `${SITE_URL}/#install`,
+      name: "How to install Watchdog in Claude Code",
+      totalTime: "PT1M",
+      step: installSteps.map((s, i) => ({ "@type": "HowToStep", position: i + 1, name: s.name, text: s.text })),
+    },
+  ],
+};
+
 export default function Home() {
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(homeLd) }} />
       <Nav />
       <main id="main">
         {/* ── Hero ─────────────────────────────────────────────── */}

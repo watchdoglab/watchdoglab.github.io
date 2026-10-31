@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { REPO, SITE_URL, VERSION, absoluteUrl, dogs, faqs, installSteps, site } from "@/lib/site";
+import { REPO, SITE_URL, VERSION, absoluteUrl, dogs, site } from "@/lib/site";
 import "./globals.css";
 
 const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
@@ -87,18 +87,6 @@ const jsonLd = {
       image: absoluteUrl("/watchdog-icon.png"),
       featureList: dogs.map((d) => `${d.name}: ${d.role} (${d.cmd})`),
       author: { "@id": `${SITE_URL}/#author` },
-    },
-    {
-      "@type": "FAQPage",
-      "@id": `${SITE_URL}/#faq`,
-      mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
-    },
-    {
-      "@type": "HowTo",
-      "@id": `${SITE_URL}/#install`,
-      name: "How to install Watchdog in Claude Code",
-      totalTime: "PT1M",
-      step: installSteps.map((s, i) => ({ "@type": "HowToStep", position: i + 1, name: s.name, text: s.text })),
     },
   ],
 };
