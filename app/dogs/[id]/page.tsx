@@ -3,7 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Cmd } from "@/components/Bits";
-import { Footer, Nav } from "@/components/Chrome";
+import { DotGlobe, Footer, Nav } from "@/components/Chrome";
+import HeroDemo from "@/components/HeroDemo";
 import { getDog } from "@/lib/dogs";
 import { REPO, absoluteUrl, asset, dogs, installCommands } from "@/lib/site";
 
@@ -49,12 +50,14 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
           <div className="wrap dhero-grid">
             <div>
               <Link className="announce" href="/#pack"><span className="dot" />The pack · {pad(d.ix)} / {dogs.length} <span>→</span></Link>
-              <div className="eyebrow">{d.role}</div>
-              <h1>{d.name}</h1>
+              <div className="dname">
+                <img src={asset(`/media/dogs/${d.id}.gif`)} alt={`${d.name}, the Watchdog ${d.role} dog`} width={88} height={88} />
+                <div><div className="eyebrow">{d.role}</div><h1>{d.name}</h1></div>
+              </div>
               <p className="lead"><b>{d.tagline}.</b> {d.desc}</p>
               <div className="ctas"><Cmd text={d.cmd} dark /></div>
             </div>
-            <div className="dog-art"><img src={asset(`/media/dogs/${d.id}.gif`)} alt={`${d.name}, the Watchdog ${d.role} dog`} width={320} height={320} /></div>
+            <div className="hero-art"><div className="hero-bg"><DotGlobe /></div><HeroDemo ids={[d.id]} /></div>
           </div>
         </section>
 

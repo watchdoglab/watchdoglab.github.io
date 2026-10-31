@@ -278,12 +278,13 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .foot-bar{display:flex;justify-content:space-between;gap:16px;padding-top:18px;padding-bottom:18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
 
 /* dog page */
-.dhero{background:linear-gradient(180deg,var(--bg),var(--tint));border-bottom:1px solid var(--line)}
-.dhero-grid{display:grid;grid-template-columns:1.3fr 1fr;align-items:center;gap:40px;padding-top:72px;padding-bottom:72px}
+.dhero{background:linear-gradient(180deg,var(--bg),var(--tint));border-bottom:1px solid var(--line);overflow:hidden}
+.dhero-grid{display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:40px;padding-top:72px;padding-bottom:72px}
 .dhero h1{margin-bottom:4px}
 .dhero .lead b{color:var(--ink);font-weight:600}
-.dog-art{aspect-ratio:1;border:1px solid var(--line-2);border-radius:12px;background:var(--surface) radial-gradient(circle at 1px 1px,var(--line-2) 1px,transparent 0);background-size:18px 18px;display:grid;place-items:center}
-.dog-art img{width:72%}
+.dname{display:flex;align-items:center;gap:20px}
+.dname img{width:88px;height:88px;border-radius:20px;background:var(--surface);border:1px solid var(--line-2);box-shadow:0 12px 30px -10px var(--shadow);flex:none}
+.dname .eyebrow{margin-bottom:4px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
 .chips li{font-family:var(--mono);font-size:12px;padding:6px 10px;border:1px solid var(--line-2);border-radius:var(--radius);background:var(--surface)}
 .cmdlist{display:flex;flex-direction:column;gap:20px}
