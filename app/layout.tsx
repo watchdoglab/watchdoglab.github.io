@@ -1,0 +1,113 @@
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, JetBrains_Mono } from "next/font/google";
+import { REPO, SITE_URL, VERSION, absoluteUrl, dogs, faqs, installSteps, site } from "@/lib/site";
+import "./globals.css";
+
+const display = Bricolage_Grotesque({ subsets: ["latin"], weight: ["300", "400", "600", "800"], variable: "--font-display" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-mono" });
+
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
+export const metadata: Metadata = {
+  // Origin only: Next prepends basePath to file-based metadata images itself.
+  metadataBase: new URL(new URL(SITE_URL).origin),
+  title: { default: site.title, template: `%s · ${site.name}` },
+  description: site.description,
+  applicationName: site.name,
+  keywords: site.keywords,
+  authors: [{ name: site.author.name, url: site.author.url }],
+  creator: site.author.name,
+  category: "Developer Tools",
+  alternates: { canonical: absoluteUrl("/") },
+  openGraph: {
+    type: "website",
+    url: absoluteUrl("/"),
+    siteName: site.name,
+    title: site.title,
+    description: site.description,
+    locale: "en_US",
+  },
+  twitter: { card: "summary_large_image", title: site.title, description: site.description },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  ...(googleVerification ? { verification: { google: googleVerification } } : {}),
+  formatDetection: { telephone: false, email: false, address: false },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#07090c",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+};
+
+// Structured data: lets Google show the app as a rich result (free, rating-free SoftwareApplication),
+// expand the FAQ, and gives answer engines clean facts to quote.
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      url: absoluteUrl("/"),
+      name: site.name,
+      description: site.description,
+      inLanguage: "en",
+      publisher: { "@id": `${SITE_URL}/#author` },
+    },
+    {
+      "@type": "Person",
+      "@id": `${SITE_URL}/#author`,
+      name: site.author.name,
+      url: site.author.url,
+      sameAs: [site.author.github],
+    },
+    {
+      "@type": "SoftwareApplication",
+      "@id": `${SITE_URL}/#app`,
+      name: site.name,
+      alternateName: ["Watchdog for Claude Code", "Watchdog security plugin"],
+      description: site.description,
+      url: absoluteUrl("/"),
+      installUrl: absoluteUrl("/#install"),
+      codeRepository: REPO,
+      softwareVersion: VERSION,
+      operatingSystem: "Any (runs in Claude Code)",
+      applicationCategory: "DeveloperApplication",
+      applicationSubCategory: "Security review, VAPT, Claude Code plugin",
+      isAccessibleForFree: true,
+      license: "https://opensource.org/licenses/MIT",
+      offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+      image: absoluteUrl("/watchdog-icon.png"),
+      featureList: dogs.map((d) => `${d.name}: ${d.role} (${d.cmd})`),
+      author: { "@id": `${SITE_URL}/#author` },
+    },
+    {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}/#faq`,
+      mainEntity: faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
+    },
+    {
+      "@type": "HowTo",
+      "@id": `${SITE_URL}/#install`,
+      name: "How to install Watchdog in Claude Code",
+      totalTime: "PT1M",
+      step: installSteps.map((s, i) => ({ "@type": "HowToStep", position: i + 1, name: s.name, text: s.text })),
+    },
+  ],
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    <html lang="en" className={`${display.variable} ${mono.variable}`}>
+      <body>
+        <a href="#main" className="skip">Skip to content</a>
+        {children}
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+      </body>
+    </html>
+  );
+}
