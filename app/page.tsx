@@ -46,6 +46,7 @@ export default function Home() {
       <main id="main">
         {/* ── Hero ─────────────────────────────────────────────── */}
         <section id="top" className="hero">
+          <div className="hero-planet"><DotGlobe dense /></div>
           <div className="wrap hero-grid">
             <div className="hero-copy">
               <a className="announce" href={REPO}><span className="dot" />v{VERSION} · 14 dogs, one install <span>→</span></a>
@@ -57,14 +58,15 @@ export default function Home() {
               </div>
             </div>
             <div className="hero-art">
-              <div className="hero-bg"><DotGlobe /></div>
               <HeroDemo />
             </div>
           </div>
-          <div className="wrap strip">
-            <div><Icon k="pulse" />Always-on security lens</div>
-            <div><Icon k="grid" />14 dogs, one per surface</div>
-            <div><Icon k="flow" />Built into Claude Code</div>
+          <div className="strip-band">
+            <div className="wrap strip">
+              <div><Icon k="pulse" />Always-on security lens</div>
+              <div><Icon k="grid" />14 dogs, one per surface</div>
+              <div><Icon k="flow" />Built into Claude Code</div>
+            </div>
           </div>
         </section>
 

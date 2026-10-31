@@ -46,7 +46,8 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <Nav />
       <main id="main">
-        <section className="dhero">
+        <section className="dhero hero">
+          <div className="hero-planet"><DotGlobe dense /></div>
           <div className="wrap dhero-grid">
             <div>
               <Link className="announce" href="/#pack"><span className="dot" />The pack · {pad(d.ix)} / {dogs.length} <span>→</span></Link>
@@ -57,7 +58,7 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
               <p className="lead"><b>{d.tagline}.</b> {d.desc}</p>
               <div className="ctas"><Cmd text={d.cmd} dark /></div>
             </div>
-            <div className="hero-art"><div className="hero-bg"><DotGlobe /></div><HeroDemo ids={[d.id]} /></div>
+            <div className="hero-art"><HeroDemo ids={[d.id]} /></div>
           </div>
         </section>
 
