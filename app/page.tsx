@@ -1,7 +1,8 @@
 /* eslint-disable @next/next/no-img-element -- static export: plain <img> with basePath-aware src */
 import Link from "next/link";
 import { BundlePicker, Cmd } from "@/components/Bits";
-import { Footer, HeroRadar, Nav } from "@/components/Chrome";
+import { DotGlobe, Footer, Nav } from "@/components/Chrome";
+import HeroDemo from "@/components/HeroDemo";
 import { REPO, VERSION, asset, dogs, faqs, features, installCommands, installSteps } from "@/lib/site";
 
 const scanners = ["semgrep", "gitleaks", "trivy", "checkov", "osv-scanner", "bandit", "slither", "mobsf"];
@@ -56,10 +57,8 @@ export default function Home() {
               </div>
             </div>
             <div className="hero-art">
-              <HeroRadar />
-              <div className="float f1"><span className="sev crit" />SQL injection · users.ts:12</div>
-              <div className="float f2"><span className="sev high" />Public S3 bucket · storage.tf:7</div>
-              <div className="float f3"><span className="ok" />Fix verified</div>
+              <div className="hero-bg"><DotGlobe /></div>
+              <HeroDemo />
             </div>
           </div>
           <div className="wrap strip">
