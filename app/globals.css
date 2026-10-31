@@ -302,7 +302,19 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .foot-grid a:hover{color:var(--acc-700)}
 .foot-bar{display:flex;justify-content:space-between;gap:16px;padding-top:18px;padding-bottom:18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
 
-/* dog page */
+/* dog page: every accent comes from the dog's own color (--dog) */
+.dogpage{
+  --acc-400:var(--dog);--acc-600:color-mix(in srgb,var(--dog) 70%,#000);--acc-700:color-mix(in srgb,var(--dog) 55%,#000);--acc-100:color-mix(in srgb,var(--dog) 16%,#fff);
+  --glow:color-mix(in srgb,var(--dog) 30%,transparent);--tint:color-mix(in srgb,var(--dog) 7%,#f2f5f8);
+  --hero:linear-gradient(170deg,color-mix(in srgb,var(--dog) 12%,#fff) 0%,color-mix(in srgb,var(--dog) 38%,#fff) 55%,color-mix(in srgb,var(--dog) 58%,#fff) 100%);
+  --planet-dot:#fff;--scan-line:#ffffff40;
+}
+:root[data-theme="dark"] .dogpage{--acc-600:var(--dog);--acc-700:color-mix(in srgb,var(--dog) 60%,#fff);--acc-100:color-mix(in srgb,var(--dog) 18%,#05080d);--tint:color-mix(in srgb,var(--dog) 5%,#05080d);
+  --hero:radial-gradient(120% 90% at 80% 60%,color-mix(in srgb,var(--dog) 30%,#05080d) 0%,color-mix(in srgb,var(--dog) 12%,#05080d) 45%,#05080d 100%);--planet-dot:var(--dog);--scan-line:color-mix(in srgb,var(--dog) 15%,transparent)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .dogpage{--acc-600:var(--dog);--acc-700:color-mix(in srgb,var(--dog) 60%,#fff);--acc-100:color-mix(in srgb,var(--dog) 18%,#05080d);--tint:color-mix(in srgb,var(--dog) 5%,#05080d);
+  --hero:radial-gradient(120% 90% at 80% 60%,color-mix(in srgb,var(--dog) 30%,#05080d) 0%,color-mix(in srgb,var(--dog) 12%,#05080d) 45%,#05080d 100%);--planet-dot:var(--dog);--scan-line:color-mix(in srgb,var(--dog) 15%,transparent)}}
+.dogpage .sec.tint{background:var(--tint)}
+
 .dhero-grid{display:grid;grid-template-columns:1fr 1.1fr;align-items:center;gap:40px;padding-top:72px;padding-bottom:72px}
 .dhero h1{margin-bottom:4px}
 .dhero .lead b{color:var(--ink);font-weight:600}

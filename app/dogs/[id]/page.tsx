@@ -50,6 +50,7 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify([breadcrumbs, faqLd]) }} />
+      <div className="dogpage" style={{ "--dog": d.accent } as React.CSSProperties}>
       <Nav />
       <main id="main">
         <section className="dhero hero">
@@ -145,6 +146,7 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
         </section>
       </main>
       <Footer />
+      </div>
     </>
   );
 }

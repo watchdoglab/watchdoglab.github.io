@@ -1,13 +1,13 @@
 import detail from "./dogs-detail.json";
 import { bundles, dogs } from "./site";
 
-/** Each dog's page accent. */
+/** Each dog's page color, taken from the dominant hue of its artwork. */
 const accent: Record<string, string> = {
-  malinois: "#2ed4bf", bloodhound: "#ff8a3d", doberman: "#ff4d7a", husky: "#64d2ff", collie: "#b388ff", beagle: "#ffd60a", rottweiler: "#ff6a3d",
-  shepherd: "#3dffb4", dachshund: "#ff9fd6", akita: "#ff3b30", pointer: "#c6ff3d", shiba: "#ffb020", saintbernard: "#ff6b6b", pyrenees: "#e9e6dc",
+  malinois: "#3fbfa6", bloodhound: "#e8b030", doberman: "#d13030", husky: "#4fb0c6", collie: "#8b6fd6", beagle: "#d9822b", rottweiler: "#a8561e",
+  shepherd: "#1fa855", dachshund: "#c2203a", akita: "#3a7bd5", pointer: "#d6b448", shiba: "#e06a10", saintbernard: "#d0453a", pyrenees: "#2a9a94",
 };
 
-export const accentOf = (id: string) => accent[id] ?? "#2ed4bf";
+export const accentOf = (id: string) => accent[id] ?? "#3fbfa6";
 
 type Detail = (typeof detail)[keyof typeof detail];
 
