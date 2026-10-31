@@ -7,7 +7,7 @@ export function Nav() {
   return (
     <header className="nav">
       <div className="nav-in">
-        <Link className="brand" href="/"><img src={asset("/watchdog-icon.png")} alt="" width={28} height={28} /><span>Watchdog</span></Link>
+        <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog</span></Link>
         <nav className="links" aria-label="Main">
           <Link href="/#how">How it works</Link>
           <Link href="/#pack">The pack</Link>
@@ -53,7 +53,7 @@ export function Footer() {
     <footer className="foot">
       <div className="wrap foot-grid">
         <div>
-          <Link className="brand" href="/"><img src={asset("/watchdog-icon.png")} alt="" width={28} height={28} /><span>Watchdog</span></Link>
+          <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog</span></Link>
           <p className="muted">Security review that runs while you build, inside Claude Code. Free and MIT licensed.</p>
         </div>
         <div>

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   // Origin only: Next prepends basePath to file-based metadata images itself.
   metadataBase: new URL(new URL(SITE_URL).origin),
   title: { default: site.title, template: `%s · ${site.name}` },
-  description: site.description,
+  description: site.metaDescription,
   applicationName: site.name,
   keywords: site.keywords,
   authors: [{ name: site.author.name, url: site.author.url }],
@@ -24,10 +24,10 @@ export const metadata: Metadata = {
     url: absoluteUrl("/"),
     siteName: site.name,
     title: site.title,
-    description: site.description,
+    description: site.metaDescription,
     locale: "en_US",
   },
-  twitter: { card: "summary_large_image", title: site.title, description: site.description },
+  twitter: { card: "summary_large_image", title: site.title, description: site.metaDescription },
   robots: {
     index: true,
     follow: true,

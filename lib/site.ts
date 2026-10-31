@@ -14,8 +14,11 @@ export const installCommands = ["/plugin marketplace add watchdoglab/watchdog", 
 
 export const site = {
   name: "Watchdog",
-  title: "Watchdog: Security Review Inside Claude Code",
+  title: "Watchdog: Claude Code Security Plugin for Code Review",
   tagline: "A pack of security dogs that guard your code while you build.",
+  /** Meta description: under 160 characters so Google shows it whole. */
+  metaDescription:
+    "Free, open-source Claude Code security plugin. 14 security dogs flag vulnerabilities as you code and audit your whole repo with one command.",
   description:
     "Watchdog is a free, open-source Claude Code plugin: 14 security dogs that each guard one part of your product (VAPT, cloud, AI, APIs, privacy, supply chain, auth, mobile, databases, secrets, frontend, Web3, incidents and compliance). They flag risks as you code and audit the whole repo with one command.",
   keywords: [

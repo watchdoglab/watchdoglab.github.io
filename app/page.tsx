@@ -134,7 +134,7 @@ export default function Home() {
                       <li key={f.t}>
                         <span className={`tagsev ${f.s}`}>{sevName[f.s as keyof typeof sevName]}</span>
                         <span className="ft"><b>{f.t}</b><code>{f.f}</code></span>
-                        <img src={asset(`/media/dogs/${f.dog}.gif`)} alt={f.dog} width={28} height={28} />
+                        <img src={asset(`/media/dogs/${f.dog}.gif`)} alt={f.dog} width={28} height={28} loading="lazy" />
                       </li>
                     ))}
                   </ul>
@@ -167,7 +167,7 @@ export default function Home() {
             <div className="pack">
               {dogs.map((d) => (
                 <Link className="dogcard" key={d.id} href={`/dogs/${d.id}/`}>
-                  <img src={asset(`/media/dogs/${d.id}.gif`)} alt="" width={64} height={64} />
+                  <img src={asset(`/media/dogs/${d.id}.gif`)} alt="" width={64} height={64} loading="lazy" />
                   <div className="eyebrow">{d.role}</div>
                   <h3>{d.name}</h3>
                   <p>{d.desc}</p>

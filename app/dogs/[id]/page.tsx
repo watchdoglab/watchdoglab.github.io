@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   if (!d) return {};
   const title = `${d.name}, the ${d.role} dog`;
   return {
-    title, description: `${d.desc} ${d.intro}`,
+    title, description: d.desc,
     alternates: { canonical: absoluteUrl(`/dogs/${d.id}/`) },
     openGraph: { title: `${title} · Watchdog`, description: d.desc, url: absoluteUrl(`/dogs/${d.id}/`) },
   };
@@ -30,8 +30,19 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
   if (!d) notFound();
   const total = d.total ?? Math.max(...d.results.map((r) => r.found));
 
+  const breadcrumbs = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Watchdog", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 2, name: "The pack", item: absoluteUrl("/#pack") },
+      { "@type": "ListItem", position: 3, name: d.name, item: absoluteUrl(`/dogs/${d.id}/`) },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbs) }} />
       <Nav />
       <main id="main">
         <section className="dhero">

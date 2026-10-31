@@ -72,7 +72,7 @@ export function BundlePicker() {
             const d = dogs.find((x) => x.id === id)!;
             return (
               <li key={id}>
-                <img src={asset(`/media/dogs/${id}.gif`)} alt="" width={36} height={36} />
+                <img src={asset(`/media/dogs/${id}.gif`)} alt="" width={36} height={36} loading="lazy" />
                 <span><b>{d.name}</b><small>{d.role}</small></span>
               </li>
             );
