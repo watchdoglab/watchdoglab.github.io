@@ -272,11 +272,8 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .steps li{display:flex;gap:16px}
 .steps li>span{flex:none;width:30px;height:30px;border-radius:50%;border:1px solid var(--line-2);background:var(--surface);display:grid;place-items:center;font-family:var(--mono);font-size:13px;color:var(--acc-700)}
 .steps p{color:var(--ink-2);font-size:15px}
-.term{background:var(--dark);border-color:var(--dark)}
-.term .dash-bar{background:#141c2e;border-color:#ffffff14}
-.term .dash-bar span{background:#ffffff26}
 .term-in{display:flex;flex-direction:column;gap:10px;padding:24px}
-.term-in .cmd{max-width:none;background:#141c2e;border-color:#ffffff14}
+.term-in .cmd{max-width:none}
 
 /* faq */
 .faq details{border-bottom:1px solid var(--line)}

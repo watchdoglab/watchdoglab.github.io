@@ -258,7 +258,7 @@ export default function Home() {
             </div>
             <div className="term">
               <div className="dash-bar"><span /><span /><span /><code>claude</code></div>
-              <div className="term-in">{installCommands.map((c) => <Cmd key={c} text={c} dark />)}<Cmd text="/watchdog-go-all" dark /></div>
+              <div className="term-in">{installCommands.map((c) => <Cmd key={c} text={c} />)}<Cmd text="/watchdog-go-all" /></div>
             </div>
           </div>
         </section>
