@@ -59,7 +59,7 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .btn.blue{background:var(--acc-600);color:var(--acc-fg)}
 .btn.blue:hover{background:var(--acc-700)}
 .btn.ghost{background:var(--surface);border-color:var(--line-2)}
-.btn.ghost.light{background:transparent;color:#fff;border-color:#ffffff40}
+.btn.ghost.light{background:transparent;color:var(--ink);border-color:var(--line-2)}
 .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 
 /* nav */
@@ -288,8 +288,8 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .faq p{padding:0 0 20px;color:var(--ink-2);font-size:15px;max-width:44em}
 
 /* cta */
-.cta{background:var(--dark);color:#fff;background-image:radial-gradient(circle at 1px 1px,#ffffff1a 1px,transparent 0);background-size:22px 22px}
-.cta .wrap{padding-top:96px;padding-bottom:96px;border-color:#ffffff14;text-align:center;display:flex;flex-direction:column;align-items:center}
+.cta{background:var(--tint);color:var(--ink);border-top:1px solid var(--line);border-bottom:1px solid var(--line);background-image:radial-gradient(circle at 1px 1px,color-mix(in srgb,var(--ink) 10%,transparent) 1px,transparent 0);background-size:22px 22px}
+.cta .wrap{padding-top:96px;padding-bottom:96px;text-align:center;display:flex;flex-direction:column;align-items:center}
 .cta h2{max-width:none}
 .cta .ctas{justify-content:center}
 .cta .term-in{width:100%;max-width:560px;padding:28px 0 0}
