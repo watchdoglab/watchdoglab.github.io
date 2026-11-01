@@ -63,7 +63,7 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
                 <div><div className="eyebrow">{d.role}</div><h1>{d.name}</h1></div>
               </div>
               <p className="lead"><b>{d.tagline}.</b> {d.desc}</p>
-              <div className="ctas"><Cmd text={d.cmd} dark /></div>
+              <div className="ctas"><Cmd text={d.cmd} /></div>
             </div>
             <div className="hero-art"><HeroDemo ids={[d.id]} /></div>
           </div>

@@ -65,7 +65,7 @@ export function BundlePicker() {
       </div>
       <div className="picker-body" role="tabpanel">
         <div className="eyebrow">One command</div>
-        <Cmd text={b.cmd} dark />
+        <Cmd text={b.cmd} />
         <div className="eyebrow mt">Sends {b.dogs.length} dogs</div>
         <ul className="picker-dogs">
           {b.dogs.map((id) => {
