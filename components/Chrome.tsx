@@ -7,7 +7,7 @@ export function Nav() {
   return (
     <header className="nav">
       <div className="nav-in">
-        <Link className="brand" href="/"><img src={asset("/lab-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog Lab</span></Link>
+        <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog Lab</span></Link>
         <nav className="links" aria-label="Main">
           <Link href="/watchdog/">Watchdog</Link>
           <Link href="/action/">GitHub Action</Link>
@@ -83,7 +83,7 @@ export function Footer() {
     <footer className="foot">
       <div className="wrap foot-grid">
         <div>
-          <Link className="brand" href="/"><img src={asset("/lab-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog Lab</span></Link>
+          <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog Lab</span></Link>
           <p className="muted">Security for autonomous coding. AI writes the code. Watchdog guards it.</p>
         </div>
         <div>
