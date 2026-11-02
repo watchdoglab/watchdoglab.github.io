@@ -381,4 +381,63 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .cards.two-up .card h3{font-size:28px}
 .card .more{margin-top:auto;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--acc-700)}
 @media (max-width:760px){.cards.two-up{grid-template-columns:1fr}}
-.action-logo{display:block;width:112px;height:112px;margin-bottom:24px;filter:drop-shadow(0 12px 30px var(--shadow))}
+.ahero .hero-grid{padding-top:0;padding-bottom:0}.ahero .hero-grid h1{font-size:clamp(40px,5.4vw,78px)}
+
+/* GitHub PR demo on /action/ */
+.gh{background:var(--surface);border:1px solid var(--line-2);box-shadow:0 40px 80px -30px var(--glow),0 0 0 6px color-mix(in srgb,var(--surface) 50%,transparent);font-size:13px;overflow:hidden}
+.gh-head{padding:16px 18px 0;border-bottom:1px solid var(--line)}
+.gh-title{font-size:19px;font-weight:600;color:var(--ink)}
+.gh-title span{color:var(--muted);font-weight:400}
+.gh-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin:8px 0 12px;color:var(--muted)}
+.gh-meta b{color:var(--ink-2);font-weight:600}
+.gh-meta code{font-size:11.5px;padding:1px 6px;background:var(--tint);color:var(--acc-700)}
+.gh-open{background:#238636;color:#fff;border-radius:99px;padding:3px 10px;font-weight:600;font-size:12px}
+.gh-tabs{display:flex;gap:4px;margin-bottom:-1px}
+.gh-tabs span{padding:8px 12px;color:var(--muted);border-bottom:2px solid transparent;white-space:nowrap}
+.gh-tabs span.on{color:var(--ink);border-color:var(--acc-600);font-weight:600}
+.gh-tabs i{font-style:normal;font-size:11px;background:var(--raise);border-radius:99px;padding:1px 7px;margin-left:4px}
+.gh-body{padding:16px 18px;min-height:310px;animation:ghin .35s ease}
+@keyframes ghin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.gh-st{display:inline-block;flex:none;width:14px;height:14px;border-radius:50%;vertical-align:-2px}
+.gh-st.is-done{background:#238636;box-shadow:inset 0 0 0 3px #238636,inset 0 0 0 7px #fff3}
+.gh-st.is-run{border:2px solid #d29922;border-top-color:transparent;animation:spin 1s linear infinite}
+.gh-st.is-idle{border:2px solid var(--line-2)}
+@keyframes spin{to{transform:rotate(360deg)}}
+.gh-jobhead{display:flex;align-items:center;gap:8px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.gh-jobhead small{color:var(--muted)}
+.gh-job ol{margin-top:8px}
+.gh-job li{display:flex;align-items:center;gap:10px;padding:8px 4px;color:var(--muted);font-family:var(--mono);font-size:12.5px}
+.gh-job li.is-done,.gh-job li.is-run{color:var(--ink-2)}
+.gh-log{margin-top:10px;padding:10px 12px;background:var(--raise);font-size:12px;color:var(--ink-2);white-space:pre-wrap}
+.gh-file{display:flex;justify-content:space-between;padding:8px 10px;background:var(--raise);border:1px solid var(--line)}
+.gh-file small{color:#3fb950;font-family:var(--mono)}
+.gh-files{font-family:var(--mono);font-size:12px}
+.gh-ln{display:flex;gap:10px;padding:2px 10px;background:color-mix(in srgb,#2ea043 10%,transparent);border-inline:1px solid var(--line)}
+.gh-ln span{width:22px;color:var(--muted);text-align:right;flex:none}
+.gh-ln em{font-style:normal;color:#3fb950}
+.gh-ln code{white-space:pre;overflow:hidden;text-overflow:ellipsis;color:var(--ink-2)}
+.gh-ln.hit{background:color-mix(in srgb,#d29922 22%,transparent)}
+.gh-comment,.gh-review{font-family:var(--font);margin:8px 0;padding:12px 14px;border:1px solid var(--line-2);background:var(--bg);animation:ghin .4s ease .5s both}
+.gh-who{display:flex;align-items:center;gap:6px;color:var(--muted);margin-bottom:8px}
+.gh-who img{border-radius:50%}
+.gh-who b{color:var(--ink)}
+.gh-who small{border:1px solid var(--line-2);border-radius:99px;padding:0 6px;font-size:10.5px}
+.gh-comment p,.gh-review p{margin:4px 0}
+.gh-muted{color:var(--muted)}
+.gh-sugg{margin-top:10px;border:1px solid var(--line-2);font-family:var(--mono);font-size:11.5px}
+.gh-sugg-h{padding:6px 10px;background:var(--raise);font-family:var(--font);color:var(--muted)}
+.gh-sugg code{display:block;padding:3px 10px;white-space:pre;overflow:hidden;text-overflow:ellipsis}
+.gh-sugg .del{background:color-mix(in srgb,#f85149 15%,transparent);color:var(--ink-2)}
+.gh-sugg .add{background:color-mix(in srgb,#2ea043 15%,transparent);color:var(--ink-2)}
+.gh-sugg button{display:block;margin:8px 10px 10px auto;padding:5px 12px;background:#238636;color:#fff;border:0;font-family:var(--font);font-size:12px;cursor:default}
+.gh-event{display:flex;align-items:center;gap:8px;color:var(--muted);padding:4px 0 12px}
+.gh-event b{color:var(--ink)}
+.gh-dot{width:10px;height:10px;border-radius:50%;background:#238636}
+.gh-review h4{font-size:16px;margin:4px 0 8px}
+.gh-checks{display:flex;align-items:center;gap:12px;margin-top:12px;padding:12px 14px;border:1px solid var(--line-2)}
+.gh-checks span{display:flex;flex-direction:column}
+.gh-checks small{color:var(--muted)}
+.gh-checks.is-done{border-color:color-mix(in srgb,#238636 60%,var(--line-2))}
+@media (prefers-reduced-motion:reduce){.gh-body,.gh-comment,.gh-review,.gh-st.is-run{animation:none!important}}
+.gh-job li span,.gh-checks span{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gh-checks small,.gh-checks b{display:block;overflow:hidden;text-overflow:ellipsis}
