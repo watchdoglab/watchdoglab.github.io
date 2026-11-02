@@ -368,3 +368,16 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 /* theme switcher */
 .theme{width:36px;height:36px;display:grid;place-items:center;border-radius:var(--radius);color:var(--ink-2);transition:color .15s,background .15s}
 .theme:hover{color:var(--acc-700);background:var(--tint)}
+
+/* action page */
+.tr.tr3{grid-template-columns:1fr 1fr 1.6fr}
+.tr.tr3 code{font-size:13px;word-break:break-word}
+@media (max-width:760px){.tr.tr3{grid-template-columns:1fr}.tr.tr3 span+span{border-left:0;border-top:1px solid var(--line)}}
+.panel pre.diff{white-space:pre;overflow-x:auto;margin:0}
+.ahero .wrap{padding-top:120px;padding-bottom:120px}
+.ahero h1{font-size:clamp(44px,7.4vw,96px);margin-bottom:20px}
+.ahero .lead{font-size:clamp(17px,1.6vw,21px);max-width:720px}
+.cards.two-up{grid-template-columns:repeat(2,1fr)}
+.cards.two-up .card h3{font-size:28px}
+.card .more{margin-top:auto;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--acc-700)}
+@media (max-width:760px){.cards.two-up{grid-template-columns:1fr}}

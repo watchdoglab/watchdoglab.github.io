@@ -75,7 +75,7 @@ const jsonLd = {
       alternateName: ["Watchdog for Claude Code", "Watchdog security plugin"],
       description: site.description,
       url: absoluteUrl("/"),
-      installUrl: absoluteUrl("/#install"),
+      installUrl: absoluteUrl("/watchdog/#install"),
       codeRepository: REPO,
       softwareVersion: VERSION,
       operatingSystem: "Any (runs in Claude Code)",

@@ -7,17 +7,17 @@ export function Nav() {
   return (
     <header className="nav">
       <div className="nav-in">
-        <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog</span></Link>
+        <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog Lab</span></Link>
         <nav className="links" aria-label="Main">
-          <Link href="/#how">How it works</Link>
-          <Link href="/#pack">The pack</Link>
-          <Link href="/#commands">Commands</Link>
-          <Link href="/#faq">FAQ</Link>
+          <Link href="/#philosophy">Philosophy</Link>
+          <Link href="/watchdog/">Watchdog</Link>
+          <Link href="/watchdog/#pack">The pack</Link>
+          <Link href="/action/">GitHub Action</Link>
         </nav>
         <div className="nav-cta">
           <ThemeToggle />
           <a className="btn sm ghost" href={REPO}>GitHub</a>
-          <Link className="btn sm blue" href="/#install">Install</Link>
+          <Link className="btn sm blue" href="/watchdog/#install">Install</Link>
         </div>
       </div>
     </header>
@@ -85,8 +85,8 @@ export function Footer() {
     <footer className="foot">
       <div className="wrap foot-grid">
         <div>
-          <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog</span></Link>
-          <p className="muted">Security review that runs while you build, inside Claude Code. Free and MIT licensed.</p>
+          <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog Lab</span></Link>
+          <p className="muted">AI writes the code. Watchdog guards it. Free and MIT licensed.</p>
         </div>
         <div>
           <div className="eyebrow">The pack</div>
@@ -100,9 +100,10 @@ export function Footer() {
           <div className="eyebrow">Project</div>
           <ul>
             <li><a href={REPO}>GitHub</a></li>
+            <li><Link href="/action/">GitHub Action</Link></li>
             <li><a href={`${REPO}/issues`}>Issues</a></li>
             <li><a href={SPONSORS}>Sponsor</a></li>
-            <li><Link href="/#faq">FAQ</Link></li>
+            <li><Link href="/watchdog/#faq">FAQ</Link></li>
           </ul>
         </div>
       </div>

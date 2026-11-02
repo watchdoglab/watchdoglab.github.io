@@ -42,7 +42,7 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Watchdog", item: absoluteUrl("/") },
-      { "@type": "ListItem", position: 2, name: "The pack", item: absoluteUrl("/#pack") },
+      { "@type": "ListItem", position: 2, name: "The pack", item: absoluteUrl("/watchdog/#pack") },
       { "@type": "ListItem", position: 3, name: d.name, item: absoluteUrl(`/dogs/${d.id}/`) },
     ],
   };
@@ -57,7 +57,7 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
           <div className="hero-planet"><DotGlobe dense /></div>
           <div className="wrap dhero-grid">
             <div>
-              <Link className="announce" href="/#pack"><span className="dot" />The pack · {pad(d.ix)} / {dogs.length} <span>→</span></Link>
+              <Link className="announce" href="/watchdog/#pack"><span className="dot" />The pack · {pad(d.ix)} / {dogs.length} <span>→</span></Link>
               <div className="dname">
                 <img src={asset(`/media/dogs/${d.id}.gif`)} alt={`${d.name}, the Watchdog ${d.role} dog`} width={88} height={88} />
                 <div><div className="eyebrow">{d.role}</div><h1>{d.name}</h1></div>
