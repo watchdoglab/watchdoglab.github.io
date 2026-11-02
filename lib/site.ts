@@ -3,6 +3,7 @@
 export const BASE_PATH = (process.env.NEXT_PUBLIC_BASE_PATH ?? "").replace(/\/$/, "");
 export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL ?? "https://watchdoglab.github.io").replace(/\/$/, "");
 export const REPO = "https://github.com/watchdoglab/watchdog";
+export const ORG = "https://github.com/watchdoglab";
 export const SPONSORS = "https://github.com/sponsors/salahu01";
 export const INSTALL = "#install";
 export const VERSION = "0.2.3";

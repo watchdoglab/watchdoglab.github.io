@@ -135,7 +135,7 @@ export default function ActionPage() {
             <h2>Want the dogs while you code, too?</h2>
             <div className="term-in"><Cmd text="/plugin marketplace add watchdoglab/watchdog" dark /></div>
             <div className="ctas">
-              <Link className="btn blue" href="/">Watchdog for Claude Code <span>→</span></Link>
+              <Link className="btn blue" href="/watchdog/">Watchdog for Claude Code <span>→</span></Link>
               <a className="btn ghost light" href={ACTION}>Action on GitHub <span>↗</span></a>
             </div>
           </div>

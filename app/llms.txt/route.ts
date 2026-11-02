@@ -5,7 +5,11 @@ export const dynamic = "force-static";
 /** llms.txt: concise, LLM-friendly summary (https://llmstxt.org). */
 export function GET() {
   const body = [
-    `# ${site.name}`,
+    "# Watchdog Lab",
+    "",
+    "> Security for autonomous coding. Products: Watchdog for Claude Code (" + absoluteUrl("/watchdog/") + ") and the Watchdog PR Review GitHub Action (" + absoluteUrl("/action/") + ").",
+    "",
+    `## ${site.name}`,
     "",
     `> ${site.description}`,
     "",

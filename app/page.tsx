@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { DotGlobe, Footer, Nav } from "@/components/Chrome";
-import { REPO, absoluteUrl, dogs } from "@/lib/site";
+import { ORG, absoluteUrl, dogs } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: { absolute: "Watchdog Lab · Security for autonomous coding" },
   description: "AI writes the code. Watchdog guards it. Watchdog Lab builds the security that keeps pace with AI agents.",
   alternates: { canonical: absoluteUrl("/") },
+  openGraph: { title: "Watchdog Lab · Security for autonomous coding", description: "AI writes the code. Watchdog guards it.", url: absoluteUrl("/"), siteName: "Watchdog Lab" },
+  twitter: { title: "Watchdog Lab · Security for autonomous coding", description: "AI writes the code. Watchdog guards it." },
 };
 
 const principles = [
@@ -33,7 +35,7 @@ export default function Home() {
             <p className="lead">AI agents now write, review and ship code on their own. <b>Watchdog Lab builds the security that keeps pace:</b> dogs that watch every change, flag the risk, and hand you the fix, without slowing you down.</p>
             <div className="ctas">
               <a className="btn blue" href="#products">See the products <span>→</span></a>
-              <a className="btn ghost" href={REPO}>GitHub <span>↗</span></a>
+              <a className="btn ghost" href={ORG}>GitHub <span>↗</span></a>
             </div>
           </div>
         </section>

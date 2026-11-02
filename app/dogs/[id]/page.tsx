@@ -41,7 +41,7 @@ export default async function DogPage({ params }: { params: Promise<{ id: string
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Watchdog", item: absoluteUrl("/") },
+      { "@type": "ListItem", position: 1, name: "Watchdog", item: absoluteUrl("/watchdog/") },
       { "@type": "ListItem", position: 2, name: "The pack", item: absoluteUrl("/watchdog/#pack") },
       { "@type": "ListItem", position: 3, name: d.name, item: absoluteUrl(`/dogs/${d.id}/`) },
     ],

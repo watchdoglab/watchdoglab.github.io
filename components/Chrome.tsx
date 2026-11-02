@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element -- static export: plain <img> with basePath-aware src */
 import Link from "next/link";
 import { ThemeToggle } from "@/components/Bits";
-import { REPO, SPONSORS, VERSION, asset, dogs } from "@/lib/site";
+import { ORG, REPO, SPONSORS, asset, dogs } from "@/lib/site";
 
 export function Nav() {
   return (
@@ -9,15 +9,14 @@ export function Nav() {
       <div className="nav-in">
         <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog Lab</span></Link>
         <nav className="links" aria-label="Main">
-          <Link href="/#philosophy">Philosophy</Link>
           <Link href="/watchdog/">Watchdog</Link>
-          <Link href="/watchdog/#pack">The pack</Link>
           <Link href="/action/">GitHub Action</Link>
+          <Link href="/#philosophy">Philosophy</Link>
         </nav>
         <div className="nav-cta">
           <ThemeToggle />
-          <a className="btn sm ghost" href={REPO}>GitHub</a>
-          <Link className="btn sm blue" href="/watchdog/#install">Install</Link>
+          <a className="btn sm ghost" href={ORG}>GitHub</a>
+          <Link className="btn sm blue" href="/#products">Products</Link>
         </div>
       </div>
     </header>
@@ -86,28 +85,35 @@ export function Footer() {
       <div className="wrap foot-grid">
         <div>
           <Link className="brand" href="/"><img src={asset("/watchdog-icon-128.png")} alt="" width={28} height={28} /><span>Watchdog Lab</span></Link>
-          <p className="muted">AI writes the code. Watchdog guards it. Free and MIT licensed.</p>
+          <p className="muted">Security for autonomous coding. AI writes the code. Watchdog guards it.</p>
         </div>
         <div>
-          <div className="eyebrow">The pack</div>
-          <ul>{dogs.slice(0, 7).map((d) => <li key={d.id}><Link href={`/dogs/${d.id}/`}>{d.name}</Link></li>)}</ul>
-        </div>
-        <div>
-          <div className="eyebrow">&nbsp;</div>
-          <ul>{dogs.slice(7).map((d) => <li key={d.id}><Link href={`/dogs/${d.id}/`}>{d.name}</Link></li>)}</ul>
-        </div>
-        <div>
-          <div className="eyebrow">Project</div>
+          <div className="eyebrow">Products</div>
           <ul>
-            <li><a href={REPO}>GitHub</a></li>
+            <li><Link href="/watchdog/">Watchdog for Claude Code</Link></li>
             <li><Link href="/action/">GitHub Action</Link></li>
-            <li><a href={`${REPO}/issues`}>Issues</a></li>
-            <li><a href={SPONSORS}>Sponsor</a></li>
+          </ul>
+        </div>
+        <div>
+          <div className="eyebrow">Watchdog</div>
+          <ul>
+            <li><Link href="/watchdog/#pack">The pack ({dogs.length} dogs)</Link></li>
+            <li><Link href="/watchdog/#commands">Commands</Link></li>
+            <li><Link href="/watchdog/#install">Install</Link></li>
             <li><Link href="/watchdog/#faq">FAQ</Link></li>
           </ul>
         </div>
+        <div>
+          <div className="eyebrow">Lab</div>
+          <ul>
+            <li><Link href="/#philosophy">Philosophy</Link></li>
+            <li><a href={ORG}>GitHub</a></li>
+            <li><a href={`${REPO}/issues`}>Issues</a></li>
+            <li><a href={SPONSORS}>Sponsor</a></li>
+          </ul>
+        </div>
       </div>
-      <div className="wrap foot-bar"><span>v{VERSION} · MIT</span><span>Static by default · secrets never printed</span></div>
+      <div className="wrap foot-bar"><span>© {new Date().getFullYear()} Watchdog Lab · MIT</span><span>Static by default · secrets never printed</span></div>
     </footer>
   );
 }
