@@ -1,4 +1,4 @@
-<p align="center"><img src="public/lab-icon.png" width="140" alt="Watchdog Lab"></p>
+<p align="center"><img src="public/watchdog-icon.png" width="140" alt="Watchdog Lab"></p>
 
 # Watchdog Lab — website
 
