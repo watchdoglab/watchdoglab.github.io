@@ -381,3 +381,4 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .cards.two-up .card h3{font-size:28px}
 .card .more{margin-top:auto;font-family:var(--mono);font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--acc-700)}
 @media (max-width:760px){.cards.two-up{grid-template-columns:1fr}}
+.action-logo{display:block;width:112px;height:112px;margin-bottom:24px;filter:drop-shadow(0 12px 30px var(--shadow))}

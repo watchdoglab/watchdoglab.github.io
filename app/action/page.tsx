@@ -1,8 +1,9 @@
+/* eslint-disable @next/next/no-img-element -- static export: plain <img> with basePath-aware src */
 import type { Metadata } from "next";
 import Link from "next/link";
 import { Cmd } from "@/components/Bits";
 import { DotGlobe, Footer, Nav } from "@/components/Chrome";
-import { absoluteUrl } from "@/lib/site";
+import { absoluteUrl, asset } from "@/lib/site";
 
 const ACTION = "https://github.com/watchdoglab/watchdog-action";
 const desc = "Security review on every pull request by the Watchdog dogs. Inline comments on risky lines with a fix, then one summary.";
@@ -75,6 +76,7 @@ export default function ActionPage() {
         <section className="dhero hero ahero">
           <div className="hero-planet"><DotGlobe dense /></div>
           <div className="wrap">
+            <img className="action-logo" src={asset("/action-icon.png")} alt="Watchdog PR Review logo" width={112} height={112} />
             <a className="announce" href={ACTION}><span className="dot" />GitHub Action · watchdoglab/watchdog-action@v1 <span>↗</span></a>
             <div className="eyebrow">Watchdog PR Review</div>
             <h1>The pack, on every pull request.</h1>
