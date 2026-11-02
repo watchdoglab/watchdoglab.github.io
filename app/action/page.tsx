@@ -70,7 +70,7 @@ const safety = [
 
 export default function ActionPage() {
   return (
-    <>
+    <div className="dogpage" style={{ "--dog": "#fb923c" } as React.CSSProperties}>
       <Nav />
       <main id="main">
         <section className="dhero hero ahero">
@@ -144,6 +144,6 @@ export default function ActionPage() {
         </section>
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
