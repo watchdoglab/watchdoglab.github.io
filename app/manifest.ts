@@ -12,6 +12,6 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: site.themeColor,
     theme_color: site.themeColor,
-    icons: [{ src: `${BASE_PATH}/watchdog-icon.png`, sizes: "1024x1024", type: "image/png" }],
+    icons: [{ src: `${BASE_PATH}/lab-icon.png`, sizes: "1024x1024", type: "image/png" }],
   };
 }
