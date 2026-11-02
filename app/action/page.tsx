@@ -73,7 +73,7 @@ export default function ActionPage() {
     <div className="dogpage" style={{ "--dog": "#fb923c" } as React.CSSProperties}>
       <Nav />
       <main id="main">
-        <section className="dhero hero ahero">
+        <section className="hero">
           <div className="hero-planet"><DotGlobe dense /></div>
           <div className="wrap hero-grid">
             <div className="hero-copy">
@@ -87,6 +87,13 @@ export default function ActionPage() {
               </div>
             </div>
             <div className="hero-art"><PrDemo /></div>
+          </div>
+          <div className="strip-band">
+            <div className="wrap strip">
+              <div><Icon d="M4 5h16v11H8l-4 4zM8 10h8" />Inline comments with a fix</div>
+              <div><Icon d="M4 4h6v6H4zM14 4h6v6h-6zM4 14h6v6H4zM14 14h6v6h-6z" />Claude, GPT, Gemini or Codex</div>
+              <div><Icon d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z" />Read-only and fork-safe</div>
+            </div>
           </div>
         </section>
 
@@ -148,4 +155,8 @@ export default function ActionPage() {
       <Footer />
     </div>
   );
+}
+
+function Icon({ d }: { d: string }) {
+  return <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round" aria-hidden="true"><path d={d} /></svg>;
 }

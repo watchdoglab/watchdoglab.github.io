@@ -56,9 +56,9 @@ h3{font-size:18px;font-weight:600;letter-spacing:-.01em}
 .btn:hover{transform:translateY(-1px)}
 .btn.sm{height:36px;padding:0 14px;font-size:12px}
 .btn.dark{background:var(--btn);color:var(--btn-fg)}
-.btn.blue{background:var(--acc-600);color:var(--acc-fg)}
-.btn.blue:hover{background:var(--acc-700)}
-.btn.ghost{background:var(--surface);border-color:var(--line-2)}
+.btn.blue{background:var(--acc-600);border-color:var(--acc-600);color:var(--acc-fg)}
+.btn.blue:hover{background:var(--acc-700);border-color:var(--acc-700)}
+.btn.ghost{background:var(--surface);border-color:color-mix(in srgb,var(--ink) 30%,transparent)}
 .btn.ghost.light{background:transparent;color:var(--ink);border-color:var(--line-2)}
 .ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:32px}
 
