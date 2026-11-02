@@ -11,7 +11,6 @@ export function Nav() {
         <nav className="links" aria-label="Main">
           <Link href="/watchdog/">Watchdog</Link>
           <Link href="/action/">GitHub Action</Link>
-          <Link href="/#philosophy">Philosophy</Link>
         </nav>
         <div className="nav-cta">
           <ThemeToggle />

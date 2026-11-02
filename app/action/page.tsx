@@ -78,7 +78,6 @@ export default function ActionPage() {
           <div className="wrap hero-grid">
             <div className="hero-copy">
               <a className="announce" href={ACTION}><span className="dot" />GitHub Action · watchdoglab/watchdog-action@v1 <span>↗</span></a>
-              <div className="eyebrow">Watchdog PR Review</div>
               <h1>The pack, on every pull request.</h1>
               <p className="lead"><b>Security review in CI.</b> Watchdog comments on risky lines with a fix, then posts one summary. Bring Claude, GPT, Gemini or Codex.</p>
               <div className="ctas">
