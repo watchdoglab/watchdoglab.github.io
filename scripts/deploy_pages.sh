@@ -7,7 +7,7 @@ URL="${PAGES_SITE_URL:-https://watchdoglab.github.io}"
 BASE="${PAGES_BASE_PATH:-}"
 echo "→ building static export for $URL"
 rm -rf out .next
-NEXT_PUBLIC_GOATCOUNTER_CODE="${GOATCOUNTER_CODE:-watchdoglab}" NEXT_PUBLIC_SITE_URL="$URL" NEXT_PUBLIC_BASE_PATH="$BASE" npm run build
+NEXT_PUBLIC_SITE_URL="$URL" NEXT_PUBLIC_BASE_PATH="$BASE" npm run build
 touch out/.nojekyll
 # Pages picks Content-Type from the extension, so give share images a .png name and point the tags at it.
 find out -type f -name opengraph-image -exec mv {} {}.png \;

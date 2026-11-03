@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex">
+<title>Watchdog Admin</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: summary row, then one panel per product (plugin, action, site), each with traffic, sources, bugs */
+:root{--bg:#f3f6f6;--panel:#ffffff;--fg:#14211f;--muted:#5d6f6c;--line:#dbe4e2;--accent:#0f7c72;--good:#1d8a4c;--warn:#b26a00;--bad:#c23b3b;
+--display:"Bricolage Grotesque",system-ui,sans-serif;--body:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1514;--panel:#16201f;--fg:#e4eeec;--muted:#93a6a2;--line:#273634;--accent:#3cc2b4;--good:#4fc584;--warn:#e0a640;--bad:#ec6b6b;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1514;--panel:#16201f;--fg:#e4eeec;--muted:#93a6a2;--line:#273634;--accent:#3cc2b4;--good:#4fc584;--warn:#e0a640;--bad:#ec6b6b;color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:15px;line-height:1.5}
+.wrap{max-width:1080px;margin:0 auto;padding-block:28px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:28px}
+h1,h2{font-family:var(--display);margin:0;text-wrap:balance}h1{font-size:1.9rem}h2{font-size:1.35rem}
+h3{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px;font-weight:600}
+.sub{color:var(--muted);margin:4px 0 0}
+.note{border-left:3px solid var(--warn);padding:8px 12px;background:var(--panel);color:var(--muted);font-size:.9rem}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px;display:grid;gap:20px}
+.head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.head a{color:var(--accent);font-family:var(--mono);font-size:.85rem}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.kpi{border-top:2px solid var(--line);padding-top:8px}
+.kpi b{display:block;font-family:var(--mono);font-size:1.6rem;font-variant-numeric:tabular-nums}
+.kpi span{color:var(--muted);font-size:.8rem}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}.cols>*{min-width:0}
+svg{width:100%;height:auto;display:block}
+table{width:100%;border-collapse:collapse;font-size:.88rem}td{padding:5px 0;border-bottom:1px solid var(--line)}
+td.n{text-align:right;font-family:var(--mono);font-variant-numeric:tabular-nums;color:var(--muted)}
+.pill{font-size:.7rem;font-weight:600;padding:1px 7px;border-radius:99px;border:1px solid currentColor;margin-right:6px}
+.open{color:var(--bad)}.closed{color:var(--good)}
+.empty{color:var(--muted);font-size:.9rem}
+a{color:var(--accent)}
+</style>
+</head><body>
+<div class="wrap">
+  <header class="head"><div><h1>Watchdog Admin</h1><p class="sub" id="gen">Loading…</p></div><a href="/admin/logout">Sign out</a></header>
+  <p class="note">GitHub counts views and clones for the last 14 days only. Website and plugin counts are anonymous: no cookies, no IP addresses stored. Action users are public repos whose workflows reference the Action.</p>
+  <div id="sum" class="kpis"></div>
+  <div id="panels" style="display:grid;gap:28px"></div>
+</div>
+<script>
+let D;
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>(n??0).toLocaleString();
+function render(){
+document.getElementById('gen').textContent='Updated '+new Date(D.generated).toLocaleString();
+function chart(views,clones){
+  const v=views.views||[],c=clones.clones||[];const days=[...new Set([...v,...c].map(x=>x.timestamp.slice(0,10)))].sort();
+  if(!days.length)return'<p class="empty">No traffic in the last 14 days.</p>';
+  const W=520,H=150,P=28,max=Math.max(1,...v.map(x=>x.count),...c.map(x=>x.count));
+  const x=i=>P+(days.length<2?0:i*(W-P-8)/(days.length-1)),y=n=>H-20-(n/max)*(H-40);
+  const line=(arr,col)=>{const m=Object.fromEntries(arr.map(a=>[a.timestamp.slice(0,10),a.count]));const pts=days.map((d,i)=>x(i)+','+y(m[d]||0)).join(' ');return`<polyline points="${pts}" fill="none" stroke="${col}" stroke-width="2"/>`};
+  return`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="Views and clones per day">
+  <line x1="${P}" x2="${W-8}" y1="${y(0)}" y2="${y(0)}" stroke="var(--line)"/><line x1="${P}" x2="${W-8}" y1="${y(max)}" y2="${y(max)}" stroke="var(--line)" stroke-dasharray="3 3"/>
+  <text x="${P-4}" y="${y(max)+4}" text-anchor="end" font-size="10" fill="var(--muted)">${max}</text><text x="${P-4}" y="${y(0)+4}" text-anchor="end" font-size="10" fill="var(--muted)">0</text>
+  <text x="${P}" y="${H-4}" font-size="10" fill="var(--muted)">${days[0].slice(5)}</text><text x="${W-8}" y="${H-4}" text-anchor="end" font-size="10" fill="var(--muted)">${days.at(-1).slice(5)}</text>
+  ${line(v,'var(--accent)')}${line(c,'var(--warn)')}
+  <text x="${W-8}" y="12" text-anchor="end" font-size="11" fill="var(--accent)">views</text><text x="${W-60}" y="12" text-anchor="end" font-size="11" fill="var(--warn)">clones</text></svg>`;
+}
+const rows=(arr,k,empty)=>arr.length?`<table>${arr.map(r=>`<tr><td>${esc(r[k])}</td><td class="n">${fmt(r.count)} · ${fmt(r.uniques)} unique</td></tr>`).join('')}</table>`:`<p class="empty">${empty}</p>`;
+function panel(name,slug,R,extra){
+  const bugs=R.issues.filter(i=>i.bug),closed=bugs.filter(i=>i.state==='CLOSED');
+  const allClosed=R.issues.filter(i=>i.state==='CLOSED');
+  const list=(bugs.length?bugs:R.issues).slice(0,15);
+  return`<section class="panel"><div class="head"><h2>${name}</h2><a href="https://github.com/watchdoglab/${slug}">watchdoglab/${slug}</a></div>
+  <div class="kpis">
+   <div class="kpi"><b>${fmt(R.clones.uniques)}</b><span>unique cloners (installs), 14d</span></div>
+   <div class="kpi"><b>${fmt(R.clones.count)}</b><span>total clones, 14d</span></div>
+   <div class="kpi"><b>${fmt(R.views.uniques)}</b><span>unique visitors, 14d</span></div>
+   <div class="kpi"><b>${fmt(R.info.stars)}</b><span>stars</span></div>
+   <div class="kpi"><b>${fmt(closed.length)} / ${fmt(bugs.length)}</b><span>bugs fixed / reported</span></div>
+   <div class="kpi"><b>${fmt(R.prs.length)}</b><span>PRs merged</span></div>
+   <div class="kpi"><b>${fmt(R.prs.filter(p=>p.reviewed).length)}</b><span>merged PRs reviewed</span></div>
+   ${extra||''}
+  </div>
+  <div class="cols"><div><h3>Traffic per day</h3>${chart(R.views,R.clones)}</div>
+  <div><h3>Where visitors come from</h3>${rows(R.referrers,'referrer','No referrers yet.')}</div></div>
+  <div class="cols"><div><h3>Most viewed pages</h3>${rows(R.paths.slice(0,8),'path','No page views yet.')}</div>
+  <div><h3>${bugs.length?'Bugs':'Issues'} (${allClosed.length} closed of ${R.issues.length})</h3>${list.length?`<table>${list.map(i=>`<tr><td><span class="pill ${i.state==='OPEN'?'open':'closed'}">${i.state==='OPEN'?'Open':'Fixed'}</span><a href="${esc(i.url)}">#${i.number} ${esc(i.title)}</a></td></tr>`).join('')}</table>`:'<p class="empty">No issues reported yet. Label bug reports "bug" to track fixes here.</p>'}</div></div>
+  <div><h3>Releases</h3>${R.releases.length?`<table>${R.releases.slice(0,6).map(r=>`<tr><td>${esc(r.tag)}</td><td class="n">${r.date?r.date.slice(0,10):''}</td></tr>`).join('')}</table>`:'<p class="empty">No releases.</p>'}</div>
+  </section>`;
+}
+function visits(V){
+  const t=(arr)=>arr&&arr.length?`<table>${arr.map(r=>`<tr><td>${esc(r.name??r.path)}</td><td class="n">${fmt(r.count)}</td></tr>`).join('')}</table>`:'<p class="empty">None yet.</p>';
+  const days=(V.daily||[]).map(d=>({timestamp:d.day,count:d.visitors}));
+  return`<section class="panel"><div class="head"><h2>Website visitors</h2><a href="/">site</a></div>
+  <div class="kpis"><div class="kpi"><b>${fmt(V.visitors)}</b><span>visitors, ${D.days}d</span></div><div class="kpi"><b>${fmt(V.views)}</b><span>page views</span></div></div>
+  <div class="cols"><div><h3>Visitors per day</h3>${chart({views:days},{clones:[]})}</div><div><h3>Where they come from</h3>${t(V.referrers)}</div></div>
+  <div class="cols"><div><h3>Top pages</h3>${t(V.pages)}</div><div><h3>Countries</h3>${t(V.countries)}</div><div><h3>Devices</h3>${t(V.devices)}</div></div></section>`;
+}
+function found(A){
+  const rv=A.reviews||[],tot={};rv.forEach(r=>Object.entries(r.findings).forEach(([k,v])=>tot[k]=(tot[k]||0)+v));
+  const sev=['critical','high','medium','low','info'],all=Object.values(tot).reduce((a,b)=>a+b,0);
+  return`<section class="panel"><h2>Bugs found by Watchdog</h2><h3>GitHub Action</h3>
+  <div class="kpis"><div class="kpi"><b>${fmt(rv.length)}</b><span>PRs reviewed by the Action</span></div>
+  <div class="kpi"><b>${fmt(rv.filter(r=>r.state==='merged').length)}</b><span>of those merged</span></div>
+  <div class="kpi"><b>${fmt(all)}</b><span>security findings</span></div>
+  ${sev.map(k=>`<div class="kpi"><b>${fmt(tot[k]||0)}</b><span>${k}</span></div>`).join('')}</div>
+  ${rv.length?`<table>${rv.slice(0,20).map(r=>`<tr><td><a href="${esc(r.url)}">${esc(r.repo)}#${r.number}</a> ${esc(r.title)}</td><td class="n">${Object.entries(r.findings).map(([k,v])=>v+' '+k).join(', ')||'clean'}</td></tr>`).join('')}</table>`:'<p class="empty">No public PRs reviewed by the Action yet.</p>'}
+  ${plug(D.pluginUse)}</section>`;
+}
+function plug(U){
+  if(!U||!U.sessions)return'<h3>Plugin (opt-in users)</h3><p class="empty">No plugin reports yet. Users who set WATCHDOG_TELEMETRY=1 send anonymous finding counts.</p>';
+  return`<h3>Plugin (opt-in users, ${D.days}d)</h3><div class="kpis"><div class="kpi"><b>${fmt(U.users)}</b><span>active users</span></div><div class="kpi"><b>${fmt(U.sessions)}</b><span>sessions</span></div>
+  <div class="kpi"><b>${fmt(U.scans)}</b><span>audits run</span></div>
+  ${['critical','high','medium','low'].map(k=>`<div class="kpi"><b>${fmt(U[k])}</b><span>${k} found</span></div>`).join('')}</div>
+  <table>${(U.scans_by||[]).map(r=>`<tr><td>/${esc(r.name)}</td><td class="n">${fmt(r.count)}</td></tr>`).join('')}</table>`;
+}
+const A=D.action,P=D.plugin,S=D.site;
+document.getElementById('sum').innerHTML=[
+ [P.clones.uniques,'Plugin installs, 14d'],[A.users.length,'Repos using the Action'],[D.visits.visitors,'Website visitors, '+D.days+'d'],
+ [[P,A].flatMap(r=>r.issues).filter(i=>i.state==='CLOSED').length,'Issues closed, all time']
+].map(([n,l])=>`<div class="kpi"><b>${fmt(n)}</b><span>${l}</span></div>`).join('');
+document.getElementById('panels').innerHTML=visits(D.visits)+found(D.action)+
+ panel('Plugin','watchdog',P)+
+ panel('GitHub Action','watchdog-action',A,`<div class="kpi"><b>${fmt(A.users.length)}</b><span>repos using it</span></div>`)+
+ (A.users.length?`<section class="panel"><h3>Repos using the Action</h3><table>${A.users.map(u=>`<tr><td><a href="https://github.com/${esc(u)}">${esc(u)}</a></td></tr>`).join('')}</table></section>`:'')+
+ panel('Website','watchdoglab.github.io',S);
+
+}
+fetch('/api/stats?days=30',{headers:{accept:'application/json'}}).then(r=>{if(r.status===401){location.href='/admin';throw 0}return r.json()}).then(d=>{D=d;render()}).catch(e=>{if(e)document.getElementById('gen').textContent='Could not load stats: '+e.message});
+</script>
+</body></html>

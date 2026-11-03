@@ -1,0 +1,11 @@
+# Cloudflare Pages project: static export in out/ plus Pages Functions in functions/.
+name = "watchdoglab"
+pages_build_output_dir = "out"
+compatibility_date = "2026-10-01"
+
+# Anonymous usage stats for /admin (tables from migrations/).
+[[d1_databases]]
+binding = "DB"
+database_name = "watchdoglab-analytics"
+database_id = "04c08ef6-e5e4-4518-bc5f-11be364fc8f9"
+migrations_dir = "migrations"
