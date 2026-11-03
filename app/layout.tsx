@@ -7,6 +7,8 @@ const sans = Geist({ subsets: ["latin"], variable: "--font-sans" });
 const mono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+// GoatCounter site code: cookieless visitor counts (no personal data stored), read by the admin dashboard.
+const goatcounter = process.env.NEXT_PUBLIC_GOATCOUNTER_CODE;
 
 export const metadata: Metadata = {
   // Origin only: Next prepends basePath to file-based metadata images itself.
@@ -103,6 +105,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <a href="#main" className="skip">Skip to content</a>
         {children}
+        {goatcounter && (
+          <script data-goatcounter={`https://${goatcounter}.goatcounter.com/count`} async src="https://gc.zgo.at/count.js" />
+        )}
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       </body>
     </html>
