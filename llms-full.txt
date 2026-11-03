@@ -1,0 +1,79 @@
+# Watchdog: Claude Code Security Plugin for Code Review
+
+Watchdog is a free, open-source Claude Code plugin: 14 security dogs that each guard one part of your product (VAPT, cloud, AI, APIs, privacy, supply chain, auth, mobile, databases, secrets, frontend, Web3, incidents and compliance). They flag risks as you code and audit the whole repo with one command.
+
+Website: https://watchdoglab.github.io/  Source: https://github.com/watchdoglab/watchdog
+
+## Features
+### Catches bugs while you code
+Each dog's lens stays on all session. When you or Claude write a login handler, a SQL query or an agent tool, the dog flags the risk on the spot: the line, why it's exploitable, and the smallest fix.
+
+### A full audit in one command
+Run one bundle for what you're building, or /watchdog-go-all for everything. You get one ranked report, Critical to Low, each finding with file:line, a concrete exploit and a fix.
+
+### Plain English
+Every finding says what it is, how someone would abuse it, how to fix it, and what happens if you don't. Useful to a junior dev or a client, not only to a security expert.
+
+### Honest about its limits
+Every report ends with Not checked, so you know what still needs a human.
+
+### Never leaks what it finds
+Secrets are reported by location and type only. The value is never printed.
+
+### Uses the tools you have
+Dogs run installed scanners (semgrep, gitleaks, trivy, checkov, osv-scanner) and read the code those scanners can't understand.
+
+## Commands
+- /watchdog-go-web (Web app + API (SaaS)): malinois, bloodhound, doberman, pointer, dachshund, akita, rottweiler
+- /watchdog-go-mobile (Mobile app + backend): shepherd, bloodhound, doberman, dachshund, akita
+- /watchdog-go-ai-app (AI product, chatbot or agent): collie, bloodhound, beagle, akita
+- /watchdog-go-infra (Cloud- or infra-heavy system): husky, akita, rottweiler
+- /watchdog-go-marketplace (Marketplace with payments): malinois, bloodhound, doberman, dachshund, shepherd, beagle
+- /watchdog-go-defi (Web3 / DeFi): shiba, pointer, akita
+- /watchdog-go-all (Everything at once): malinois, bloodhound, doberman, husky, collie, beagle, rottweiler, shepherd, dachshund, akita, pointer, shiba, saintbernard, pyrenees
+
+## Dogs
+- Malinois (VAPT, /watchdog-go-vapt): Vulnerability assessment for source code, web apps, APKs and IPAs, then the report. Active tests stay in scope.
+- Bloodhound (APIs, /watchdog-go-api): Reads your OpenAPI or GraphQL spec and handlers together for BOLA, mass assignment, SSRF and shadow routes.
+- Doberman (Auth, /watchdog-go-auth): Guards the front door: login, OAuth/OIDC, sessions, password reset, MFA, JWTs and SSO.
+- Husky (Cloud, /watchdog-go-cloud): Misconfigurations in Terraform, Kubernetes, Dockerfiles and CI pipelines.
+- Collie (AI, /watchdog-go-ai): Prompt injection, over-powered agent tools, unsafe model output, RAG leaks and risky MCP config.
+- Beagle (Privacy, /watchdog-go-privacy): Follows personal data into logs, analytics and SDKs. Maps findings to GDPR and India's DPDP Act.
+- Rottweiler (Supply chain, /watchdog-go-supply-chain): Lockfiles, typosquats, install scripts, pinning, SBOMs, signed releases and licences.
+- Shepherd (Mobile, /watchdog-go-mobile-app): Android, iOS, Flutter and React Native: storage, pinning, deep links, WebViews and bridges.
+- Dachshund (Database, /watchdog-go-database): Digs into migrations, row-level security, DB roles and Firebase/Supabase rules.
+- Akita (Secrets, /watchdog-go-secrets): Finds secrets in code and git history, helps rotate them and blocks them at commit.
+- Pointer (Frontend, /watchdog-go-frontend): XSS sinks, CSP, postMessage, token storage and third-party scripts.
+- Shiba (Web3, /watchdog-go-web3): Solidity and Rust contracts: reentrancy, access control, oracles and upgrades.
+- Saint Bernard (Incident, /watchdog-go-incident): After a breach: reads the logs, builds the timeline, sizes the blast radius, lists containment steps.
+- Pyrenees (Compliance, /watchdog-go-compliance): Maps the pack's findings to SOC 2, ISO 27001, PCI DSS and OWASP ASVS.
+
+## Install
+1. Add the marketplace: In Claude Code, run /plugin marketplace add watchdoglab/watchdog.
+2. Install the pack: Run /plugin install watchdog@watchdog. One plugin brings all 14 dogs and every command.
+3. Send the dogs out: Work as usual and the dogs flag risks as you go. Run /watchdog-go-web (or the bundle for your product) for a full audit.
+
+## FAQ
+### What is Watchdog?
+Watchdog is a free, open-source plugin for Claude Code. It adds 14 security "dogs", each an expert on one surface: VAPT, APIs, auth, cloud, AI, privacy, supply chain, mobile, databases, secrets, frontend, Web3, incident response and compliance. They review your code as you build and audit the whole repo on demand.
+
+### How do I install it?
+In Claude Code run /plugin marketplace add watchdoglab/watchdog, then /plugin install watchdog@watchdog. That single plugin includes every dog and every command.
+
+### Which command should I run?
+Run the bundle for what you're building: /watchdog-go-web, /watchdog-go-mobile, /watchdog-go-ai-app, /watchdog-go-infra, /watchdog-go-marketplace or /watchdog-go-defi. /watchdog-go-all runs every dog. Each dog also has its own command, like /watchdog-go-api or /watchdog-go-secrets.
+
+### Is Watchdog free?
+Yes. It's MIT licensed, with no accounts, subscriptions or telemetry. It runs inside your own Claude Code session.
+
+### Does it attack live systems?
+No, not by default. Every dog does static review. Only Malinois can run active tests, and only against targets you list in its authorized scope. Anything out of scope is refused.
+
+### Does it send my code anywhere?
+Watchdog adds no servers of its own. It works through Claude Code, so your code is handled the same way as in any other Claude Code session. Secrets it finds are never printed, only their location and type.
+
+### Does it replace a professional pen test?
+No. It catches a lot early and cheaply, and every report ends with a Not checked list. For a client audit, run /watchdog-go-compliance to map findings to SOC 2, ISO 27001, PCI DSS or ASVS, then bring in a human for what's left.
+
+### Which languages and stacks does it support?
+Any. The dogs read code, specs, infrastructure files, mobile binaries and smart contracts. They also use scanners you already have installed, such as semgrep, gitleaks, trivy, checkov and osv-scanner.

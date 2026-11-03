@@ -1,0 +1,42 @@
+# Watchdog Lab
+
+> Security for autonomous coding. Products: Watchdog for Claude Code (https://watchdoglab.github.io/watchdog/) and the Watchdog PR Review GitHub Action (https://watchdoglab.github.io/action/).
+
+## Watchdog
+
+> Watchdog is a free, open-source Claude Code plugin: 14 security dogs that each guard one part of your product (VAPT, cloud, AI, APIs, privacy, supply chain, auth, mobile, databases, secrets, frontend, Web3, incidents and compliance). They flag risks as you code and audit the whole repo with one command.
+
+- Runs in: Claude Code · any language, any stack
+- Price: free, open source (MIT)
+- Latest version: 0.2.3
+- Install: /plugin marketplace add watchdoglab/watchdog then /plugin install watchdog@watchdog
+- Source code: https://github.com/watchdoglab/watchdog
+
+## Commands
+- /watchdog-go-web: Web app + API (SaaS)
+- /watchdog-go-mobile: Mobile app + backend
+- /watchdog-go-ai-app: AI product, chatbot or agent
+- /watchdog-go-infra: Cloud- or infra-heavy system
+- /watchdog-go-marketplace: Marketplace with payments
+- /watchdog-go-defi: Web3 / DeFi
+- /watchdog-go-all: Everything at once
+
+## Dogs
+- Malinois (VAPT, /watchdog-go-vapt): Vulnerability assessment for source code, web apps, APKs and IPAs, then the report. Active tests stay in scope.
+- Bloodhound (APIs, /watchdog-go-api): Reads your OpenAPI or GraphQL spec and handlers together for BOLA, mass assignment, SSRF and shadow routes.
+- Doberman (Auth, /watchdog-go-auth): Guards the front door: login, OAuth/OIDC, sessions, password reset, MFA, JWTs and SSO.
+- Husky (Cloud, /watchdog-go-cloud): Misconfigurations in Terraform, Kubernetes, Dockerfiles and CI pipelines.
+- Collie (AI, /watchdog-go-ai): Prompt injection, over-powered agent tools, unsafe model output, RAG leaks and risky MCP config.
+- Beagle (Privacy, /watchdog-go-privacy): Follows personal data into logs, analytics and SDKs. Maps findings to GDPR and India's DPDP Act.
+- Rottweiler (Supply chain, /watchdog-go-supply-chain): Lockfiles, typosquats, install scripts, pinning, SBOMs, signed releases and licences.
+- Shepherd (Mobile, /watchdog-go-mobile-app): Android, iOS, Flutter and React Native: storage, pinning, deep links, WebViews and bridges.
+- Dachshund (Database, /watchdog-go-database): Digs into migrations, row-level security, DB roles and Firebase/Supabase rules.
+- Akita (Secrets, /watchdog-go-secrets): Finds secrets in code and git history, helps rotate them and blocks them at commit.
+- Pointer (Frontend, /watchdog-go-frontend): XSS sinks, CSP, postMessage, token storage and third-party scripts.
+- Shiba (Web3, /watchdog-go-web3): Solidity and Rust contracts: reentrancy, access control, oracles and upgrades.
+- Saint Bernard (Incident, /watchdog-go-incident): After a breach: reads the logs, builds the timeline, sizes the blast radius, lists containment steps.
+- Pyrenees (Compliance, /watchdog-go-compliance): Maps the pack's findings to SOC 2, ISO 27001, PCI DSS and OWASP ASVS.
+
+## Optional
+- [Full details and FAQ](https://watchdoglab.github.io/llms-full.txt)
+- [Website](https://watchdoglab.github.io/)

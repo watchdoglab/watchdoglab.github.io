@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+
+Host: https://watchdoglab.github.io
+Sitemap: https://watchdoglab.github.io/sitemap.xml
